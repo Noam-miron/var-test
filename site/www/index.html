@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Dictionary API</title>
+</head>
+<body>
+    <div class="container">
+        <h1 id="pageTitle">Dictionary API</h1>
+        <form id="searchForm">
+            <input type="text" id="searchInput" placeholder="Enter your search term">
+            <input type="submit" value="Search">
+        </form>
+        <div id="resultBox"></div>
+    </div>
+
+    <script>
+        const body = document.body;
+        const pageTitle = document.getElementById('pageTitle');
+        const container = document.querySelector('.container')
+
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const inputValue = document.getElementById('searchInput').value;
+            const apiUrl = 'https://fa49fcfd68.azurewebsites.net/api/dictionary';
+
+            // Construct the URL with the query parameter
+            const urlWithQuery = `${apiUrl}?word=${encodeURIComponent(inputValue)}`;
+
+            // Send a GET request
+            fetch(urlWithQuery)
+                .then(response => response.text())
+                .then(text => {
+                    // Display the value for the "definition" key in the result box
+                    const definition = text || 'Definition not found';
+                    document.getElementById('resultBox').innerText = `Definition: ${definition}`;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+</body>
+</html>
