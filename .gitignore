@@ -1,9 +1,11 @@
 *
 
+!/.github/
+!workflows/
 !/db/
 !/function/
 !/site/
 !.gitignore
 !index.html
 !*.tf
-!/.github/workflows/main.yml
+!main.yml
