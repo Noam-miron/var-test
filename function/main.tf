@@ -54,5 +54,10 @@ resource "azurerm_windows_function_app" "function_app" {
   storage_account_access_key = azurerm_storage_account.storage_account.primary_access_key
   service_plan_id            = azurerm_service_plan.service_plan.id
 
+  app_settings = {
+    "WEBSITE_RUN_FROM_PACKAGE" = "1"
+    "FUNCTIONS_WORKER_RUNTIME" = "python"
+  }
+
   site_config {}
 }

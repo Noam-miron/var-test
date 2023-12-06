@@ -3,7 +3,7 @@ terraform {
     resource_group_name  = "tf-state-rg"
     storage_account_name = "tfstatevarproj"
     container_name       = "tfstate"
-    key                  = "site.tfstate"
+    key                  = "site.tfstate" #terraform.tfstate
   }
 }
 data "azurerm_client_config" "current" {}
