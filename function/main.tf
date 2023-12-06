@@ -3,7 +3,7 @@ terraform {
     resource_group_name  = "tf-state-rg"
     storage_account_name = "tfstatevarproj"
     container_name       = "tfstate"
-    key                  = "site.tfstate"
+    key                  = "function.tfstate"
   }
 }
 data "azurerm_client_config" "current" {}
@@ -35,18 +35,24 @@ resource "azurerm_storage_account" "storage_account" {
 
   account_tier             = "Standard"
   account_replication_type = "LRS"
-  account_kind             = "StorageV2"
-
-  static_website {
-    index_document = "index.html"
-  }
 }
 
-resource "azurerm_storage_blob" "example" {
-  name                   = "index.html"
-  storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = "$web"
-  type                   = "Block"
-  content_type           = "text/html"
-  source                 = "index.html"
+resource "azurerm_service_plan" "service_plan" {
+  name                = "example-app-service-plan"
+  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.example.location
+  os_type             = "Windows"
+  sku_name            = "Y1"
+}
+
+resource "azurerm_windows_function_app" "example" {
+  name                = "example-windows-function-app"
+  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.example.location
+
+  storage_account_name       = azurerm_storage_account.example.name
+  storage_account_access_key = azurerm_storage_account.example.primary_access_key
+  service_plan_id            = azurerm_service_plan.example.id
+
+  site_config {}
 }
