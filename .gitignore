@@ -1,5 +1,6 @@
 *
 
+!/db/
 !/function/
 !/site/
 !.gitignore
