@@ -6,3 +6,4 @@
 !.gitignore
 !index.html
 !*.tf
+!/.github/workflows/main.yml
