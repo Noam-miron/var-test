@@ -39,20 +39,20 @@ resource "azurerm_storage_account" "storage_account" {
 
 resource "azurerm_service_plan" "service_plan" {
   name                = "example-app-service-plan"
-  resource_group_name = azurerm_resource_group.example.name
-  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
   os_type             = "Windows"
   sku_name            = "Y1"
 }
 
-resource "azurerm_windows_function_app" "example" {
+resource "azurerm_windows_function_app" "function_app" {
   name                = "example-windows-function-app"
-  resource_group_name = azurerm_resource_group.example.name
-  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
 
-  storage_account_name       = azurerm_storage_account.example.name
-  storage_account_access_key = azurerm_storage_account.example.primary_access_key
-  service_plan_id            = azurerm_service_plan.example.id
+  storage_account_name       = azurerm_storage_account.storage_account.name
+  storage_account_access_key = azurerm_storage_account.storage_account.primary_access_key
+  service_plan_id            = azurerm_service_plan.service_plan.id
 
   site_config {}
 }
