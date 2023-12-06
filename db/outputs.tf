@@ -10,7 +10,10 @@ output "cosmosdb_sql_database" {
   value = azurerm_cosmosdb_sql_database.cosmosdb_sql_database.name
 }
 
-output "cosmosdb_sql_container" {
-  value = azurerm_cosmosdb_sql_container.cosmosdb_sql_container.name
+output "cosmosdb_sql_container_restaurants" {
+  value = azurerm_cosmosdb_sql_container.restaurants.name
 }
 
+output "cosmosdb_sql_container_history" {
+  value = azurerm_cosmosdb_sql_container.history.name
+}
