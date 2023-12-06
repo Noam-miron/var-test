@@ -38,7 +38,7 @@ resource "azurerm_storage_account" "storage_account" {
 }
 
 resource "azurerm_service_plan" "service_plan" {
-  name                = "example-app-service-plan"
+  name                = "noam-app-service-plan"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   os_type             = "Windows"
@@ -46,7 +46,7 @@ resource "azurerm_service_plan" "service_plan" {
 }
 
 resource "azurerm_windows_function_app" "function_app" {
-  name                = "example-windows-function-app"
+  name                = "noam-windows-function-app"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
 
