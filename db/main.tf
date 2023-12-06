@@ -42,34 +42,24 @@ resource "azurerm_cosmosdb_sql_database" "cosmosdb_sql_database" {
   throughput          = var.throughput
 }
 
-resource "azurerm_cosmosdb_sql_container" "cosmosdb_sql_container" {
-  name                  = "${random_pet.prefix.id}-sql-container"
+resource "azurerm_cosmosdb_sql_container" "restaurants" {
+  name                  = "${random_pet.prefix.id}-sql-container-restaurants"
   resource_group_name   = azurerm_resource_group.resource_group.name
   account_name          = azurerm_cosmosdb_account.cosmosdb_account.name
   database_name         = azurerm_cosmosdb_sql_database.cosmosdb_sql_database.name
-  partition_key_path    = "/definition/id"
+  partition_key_path    = "/id"
   partition_key_version = 1
   throughput            = var.throughput
+}
 
-  indexing_policy {
-    indexing_mode = "consistent"
-
-    included_path {
-      path = "/*"
-    }
-
-    included_path {
-      path = "/included/?"
-    }
-
-    excluded_path {
-      path = "/excluded/?"
-    }
-  }
-
-  unique_key {
-    paths = ["/definition/idlong", "/definition/idshort"]
-  }
+resource "azurerm_cosmosdb_sql_container" "history" {
+  name                  = "${random_pet.prefix.id}-sql-container-history"
+  resource_group_name   = azurerm_resource_group.resource_group.name
+  account_name          = azurerm_cosmosdb_account.cosmosdb_account.name
+  database_name         = azurerm_cosmosdb_sql_database.cosmosdb_sql_database.name
+  partition_key_path    = "/id"
+  partition_key_version = 1
+  throughput            = var.throughput
 }
 
 resource "random_pet" "prefix" {
