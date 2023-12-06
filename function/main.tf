@@ -57,6 +57,7 @@ resource "azurerm_windows_function_app" "function_app" {
   app_settings = {
     "WEBSITE_RUN_FROM_PACKAGE" = "1"
     "FUNCTIONS_WORKER_RUNTIME" = "python"
+    #TODO: zip deploy function
   }
 
   site_config {}
