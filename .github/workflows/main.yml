@@ -96,16 +96,16 @@ jobs:
 
         - name: Initialize Terraform
           run: terraform init
-          working-directory: ./site
+          working-directory: ./db
           
 
         - name: Plan Terraform
           run: terraform plan
-          working-directory: ./site
+          working-directory: ./db
 
         - name: Apply Terraform
           run: terraform apply -auto-approve
-          working-directory: ./site
+          working-directory: ./db
 
           #terraform the other 2 dirs
 

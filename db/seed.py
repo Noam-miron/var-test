@@ -14,7 +14,7 @@ def seed_data(client, data):
         container.upsert_item(item)
 
 if __name__ == "__main__":
-    with open("your_seeding_data.json", "r") as file:
+    with open("seed_data.json", "r") as file:
         seeding_data = json.load(file)
 
     client = CosmosClient.from_connection_string(cosmosdb_connection_string)
