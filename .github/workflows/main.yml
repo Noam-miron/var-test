@@ -107,6 +107,12 @@ jobs:
           run: terraform apply -auto-approve
           working-directory: ./db
 
+        - name: Set Cosmos DB Connection String as Env Var
+          run: |
+            echo "COSMOSDB_CONNECTION_STRING=${{ steps.cosmosdb.outputs.cosmosdb_connection_string }}" >> $GITHUB_ENV
+            echo "COSMOSDB_DB_NAME=${{ steps.cosmosdb.outputs.cosmosdb_sql_database }}" >> $GITHUB_ENV
+            echo "COSMOSDB_DB_CONTAINER_NAME=${{ steps.cosmosdb.outputs.cosmosdb_sql_container_restaurants }}" >> $GITHUB_ENV
+
           #terraform the other 2 dirs
 
         - name: Set up Python

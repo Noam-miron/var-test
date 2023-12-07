@@ -17,3 +17,7 @@ output "cosmosdb_sql_container_restaurants" {
 output "cosmosdb_sql_container_history" {
   value = azurerm_cosmosdb_sql_container.history.name
 }
+
+output "cosmosdb_connection_string" {
+  value = azurerm_cosmosdb_account.cosmosdb_account.connection_strings.0
+}

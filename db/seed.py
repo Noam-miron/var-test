@@ -1,10 +1,11 @@
 from azure.cosmos import CosmosClient
 import json
+from os import environ
 
 # Replace these values with your Cosmos DB connection details
-cosmosdb_connection_string = "your_cosmosdb_connection_string"
-database_name = "your_database_name"
-container_name = "your_container_name"
+cosmosdb_connection_string = environ.get("COSMOSDB_CONNECTION_STRING")
+database_name = environ.get("COSMOSDB_DB_NAME")
+container_name = environ.get("COSMOSDB_DB_CONTAINER_NAME")
 
 def seed_data(client, data):
     database = client.get_database_client(database_name)
