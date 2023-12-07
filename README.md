@@ -27,8 +27,11 @@ restaurantRecommendation :
 # AZURE_SUBSCRIPTION_ID
 # AZURE_TENANT_ID
 
+# AZURE_FUNCTION_APP_PUBLISH_PROFILE (additional github secret)
+
 # TODO
 # modulate terraform files, create one resource group in a seperate module with ramdom name generator
 # create one consolidated root module that defines a single backend and not three seperate(maybe not to keep modularity?)
 # add code testing before deployment
 # set up branching and protection in repo
+# add certificate for function

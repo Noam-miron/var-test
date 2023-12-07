@@ -84,6 +84,32 @@ jobs:
             # echo "COSMOS_CONNECTION_STRING=$(terraform output -json cosmosdb_connection_string)" >> "$GITHUB_ENV"
             # echo "COSMOSDB_DATABASE_NAME=$(terraform output -raw cosmosdb_sql_database)" >> "$GITHUB_ENV"
             # echo "COSMOSDB_CONTAINER_NAME=$(terraform output -raw cosmosdb_sql_container_restaurants)" >> "$GITHUB_ENV"
+        
+        - name: Build and Package Azure Function
+          run: |
+            cd AzureFunctionApp
+            zip -r function.zip .
+          shell: bash
+    
+        - name: Upload Artifact
+          uses: actions/upload-artifact@v2
+          with:
+            name: function-artifact
+            path: AzureFunctionApp/function.zip
+
+        - name: Download Artifact
+          uses: actions/download-artifact@v2
+          with:
+            name: function-artifact
+            path: AzureFunctionApp
+    
+        - name: Deploy to Azure Function
+          uses: azure/webapps-deploy@v2
+          with:
+            app-name: your-function-app-name
+            slot-name: production
+            publish-profile: ${{ secrets.AZURE_FUNCTION_APP_PUBLISH_PROFILE }}
+            package: AzureFunctionApp/function.zip
 
           #TODO use db connection string for function
           #TODO zip deploy function code
