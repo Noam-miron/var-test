@@ -110,12 +110,12 @@ jobs:
           run: terraform apply -auto-approve
           working-directory: ./db
 
-        # - name: Set Cosmos DB Connection String as Env Var
-        #   run: |
-        #     echo 'COSMOSDB_CONNECTION_STRING=$(terraform cosmosdb_connection_string)'' >> $GITHUB_ENV
-        #     echo "COSMOSDB_CONNECTION_STRING=$(steps.tfapply.outputs.cosmosdb_connection_string)"
-        #     echo "COSMOSDB_DB_NAME=${steps.tfapply.outputs.cosmosdb_sql_database}" >> $GITHUB_ENV
-        #     echo "COSMOSDB_DB_CONTAINER_NAME=${steps.tfapply.outputs.cosmosdb_sql_container_restaurants}" >> $GITHUB_ENV
+        - name: Set Cosmos DB Connection String as Env Var
+          run: |
+            echo 'COSMOSDB_CONNECTION_STRING=$(terraform output cosmosdb_connection_string)' >> $GITHUB_ENV
+            echo "COSMOSDB_CONNECTION_STRING=$(steps.tfapply.outputs.cosmosdb_connection_string)"
+            echo "COSMOSDB_DB_NAME=${steps.tfapply.outputs.cosmosdb_sql_database}" >> $GITHUB_ENV
+            echo "COSMOSDB_DB_CONTAINER_NAME=${steps.tfapply.outputs.cosmosdb_sql_container_restaurants}" >> $GITHUB_ENV
 
           #terraform the other 2 dirs
 
@@ -134,7 +134,7 @@ jobs:
         - name: Run seeding script
           run: |
             python ./seed.py \
-            --cosmosdb-connection-string "$(terraform output cosmosdb_connection_string)" \
+            --cosmosdb-connection-string '$(terraform output cosmosdb_connection_string)' \
             --database-name "${COSMOSDB_DATABASE_NAME}" \
             --container-name "${COSMOSDB_CONTAINER_NAME}"
           working-directory: ./db
