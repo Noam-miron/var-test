@@ -17,7 +17,7 @@ def seed_data(client, data):
 if __name__ == "__main__":
     with open("seed_data.json", "r") as file:
         seeding_data = json.load(file)
-    client = CosmosClient.from_connection_string(cosmosdb_connection_string[0:1])
+    client = CosmosClient.from_connection_string(conn_str=cosmosdb_connection_string[0])
 
     seed_data(client, seeding_data)
 
