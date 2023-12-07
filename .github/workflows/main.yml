@@ -107,12 +107,16 @@ jobs:
 
         - name: TFApply
           id: tfapply
-          run: terraform apply -auto-approve
           working-directory: ./db
+          run: | 
+            terraform apply -auto-approve
+            echo "COSMOSDB_CONNECTION_STRING=$(cosmosdb_connection_string)" >> $GITHUB_ENV
+            echo "${COSMOSDB_CONNECTION_STRING}"
 
         - name: Set Cosmos DB Connection String as Env Var
           run: |
-            echo 'COSMOSDB_CONNECTION_STRING=$(terraform output cosmosdb_connection_string)' >> $GITHUB_ENV
+         
+            echo COSMOSDB_CONNECTION_STRING=$(terraform output cosmosdb_connection_string)' >> $GITHUB_ENV
             echo 'COSMOSDB_CONNECTION_STRING=$(steps.tfapply.outputs.cosmosdb_connection_string)'
             echo 'COSMOSDB_DB_NAME=${steps.tfapply.outputs.cosmosdb_sql_database}' >> $GITHUB_ENV
             echo 'COSMOSDB_DB_CONTAINER_NAME=${steps.tfapply.outputs.cosmosdb_sql_container_restaurants}' >> $GITHUB_ENV
