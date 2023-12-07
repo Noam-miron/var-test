@@ -4,6 +4,9 @@ terraform {
     storage_account_name = "tfstatevarproj"
     container_name       = "tfstate"
     key                  = "db.tfstate"
+    use_oidc             = true
+    subscription_id      = "00000000-0000-0000-0000-000000000000"
+    tenant_id            = "00000000-0000-0000-0000-000000000000"
   }
 }
 data "azurerm_client_config" "current" {}
