@@ -10,3 +10,7 @@
 !index.html
 !*.tf
 !main.yml
+!seed.py
+!seed_data.json
+!function.py
+!requirements.txt

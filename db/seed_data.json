@@ -1,0 +1,42 @@
+[
+    {
+        "name": "Pizza Hut",
+        "style": "Italian",
+        "address": "123 Main Street, Cityville",
+        "openHour": "09:00",
+        "closeHour": "23:00",
+        "vegetarian": true
+    },
+    {
+        "name": "Sushi Express",
+        "style": "Japanese",
+        "address": "456 Oak Avenue, Townsville",
+        "openHour": "11:30",
+        "closeHour": "22:00",
+        "vegetarian": false
+    },
+    {
+        "name": "Mamma Mia Pizzeria",
+        "style": "Italian",
+        "address": "789 Elm Road, Villagetown",
+        "openHour": "10:00",
+        "closeHour": "21:30",
+        "vegetarian": true
+    },
+    {
+        "name": "Taco Haven",
+        "style": "Mexican",
+        "address": "321 Pine Lane, Hamletville",
+        "openHour": "12:00",
+        "closeHour": "22:30",
+        "vegetarian": true
+    },
+    {
+        "name": "Green Bites",
+        "style": "Other",
+        "address": "555 Maple Street, Greensburg",
+        "openHour": "08:00",
+        "closeHour": "20:00",
+        "vegetarian": true
+    }
+]
