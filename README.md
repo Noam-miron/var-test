@@ -18,3 +18,17 @@ restaurantRecommendation :
     vegetarian : yes
     }
 }
+
+# TORUN
+# create terraform backend in azure, fill details in tf main files(site,function,db)
+# fill github org/repo/branch, azure subscription in azure_oidc.sh and run it to create service account
+# save service account details as repo secrets for github workflow
+# AZURE_CLIENT_ID
+# AZURE_SUBSCRIPTION_ID
+# AZURE_TENANT_ID
+
+# TODO
+# modulate terraform files, create one resource group in a seperate module with ramdom name generator
+# create one consolidated root module that defines a single backend and not three seperate(maybe not to keep modularity?)
+# add code testing before deployment
+# set up branching and protection in repo
