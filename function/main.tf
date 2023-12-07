@@ -60,5 +60,9 @@ resource "azurerm_windows_function_app" "function_app" {
     #TODO: zip deploy function
   }
 
-  site_config {}
+  site_config {
+    cors {
+      allowed_origins = ["*"]
+    }
+  }
 }
