@@ -88,8 +88,8 @@ jobs:
         #   run: |
         #     az account show
         #     az group list
-        # - name: Checkout Repository
-        #   uses: actions/checkout@v2
+        - name: Checkout Repository
+          uses: actions/checkout@v2
   
         - name: Set up Terraform
           uses: hashicorp/setup-terraform@v1
