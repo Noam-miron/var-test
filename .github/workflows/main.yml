@@ -110,8 +110,8 @@ jobs:
           working-directory: ./db
           run: | 
             terraform apply -auto-approve
-            echo "COSMOSDB_CONNECTION_STRING=$(cosmosdb_connection_string)" >> $GITHUB_ENV
-            echo "${COSMOSDB_CONNECTION_STRING}"
+            echo "COSMOSDB_CONNECTION_STRING=${{cosmosdb_connection_string}}" >> $GITHUB_ENV
+            echo "${{COSMOSDB_CONNECTION_STRING}}"
 
         - name: Set Cosmos DB Connection String as Env Var
           run: |
