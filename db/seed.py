@@ -4,8 +4,8 @@ from os import environ
 
 # Replace these values with your Cosmos DB connection details
 cosmosdb_connection_string = environ.get("COSMOSDB_CONNECTION_STRING")
-database_name = environ.get("COSMOSDB_DB_NAME")
-container_name = environ.get("COSMOSDB_DB_CONTAINER_NAME")
+database_name = environ.get("COSMOSDB_DATABASE_NAME")
+container_name = environ.get("COSMOSDB_CONTAINER_NAME")
 
 def seed_data(client, data):
     database = client.get_database_client(database_name)
@@ -20,7 +20,7 @@ if __name__ == "__main__":
     print(cosmosdb_connection_string)
     print(database_name)
     print(container_name)
-    client = CosmosClient.from_connection_string(cosmosdb_connection_string)
+    client = CosmosClient.from_connection_string(cosmosdb_connection_string[0])
 
     seed_data(client, seeding_data)
 
