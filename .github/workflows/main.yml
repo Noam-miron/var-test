@@ -57,11 +57,6 @@
 #     #     run: terraform apply -auto-approve
 
 name: Terraform Deployment
-env:
-  ARM_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}
-  ARM_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}
-  ARM_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}
-  ARM_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
 on:
   push:
@@ -70,13 +65,17 @@ on:
 
 permissions:
     id-token: write
-    contents: write
+    contents: read
 
 
 jobs:
-
   deploy:
     runs-on: ubuntu-latest
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
     steps:
         - name: 'Az CLI login using OIDC'
           uses: azure/login@v1
