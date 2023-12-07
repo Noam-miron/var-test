@@ -35,3 +35,4 @@ restaurantRecommendation :
 # add code testing before deployment
 # set up branching and protection in repo
 # add certificate for function
+# parameterize query, create stored procedure?

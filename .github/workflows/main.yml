@@ -81,13 +81,11 @@ jobs:
           working-directory: ./function
           run: | 
             terraform apply -auto-approve
-            # echo "COSMOS_CONNECTION_STRING=$(terraform output -json cosmosdb_connection_string)" >> "$GITHUB_ENV"
-            # echo "COSMOSDB_DATABASE_NAME=$(terraform output -raw cosmosdb_sql_database)" >> "$GITHUB_ENV"
-            # echo "COSMOSDB_CONTAINER_NAME=$(terraform output -raw cosmosdb_sql_container_restaurants)" >> "$GITHUB_ENV"
+            echo "FUNCTION_APP_NAME=$(terraform output -raw function_app_name)" >> "$GITHUB_ENV"
         
         - name: Build and Package Azure Function
+          working-directory: ./function/src
           run: |
-            cd AzureFunctionApp
             zip -r function.zip .
           shell: bash
     
@@ -95,24 +93,29 @@ jobs:
           uses: actions/upload-artifact@v2
           with:
             name: function-artifact
-            path: AzureFunctionApp/function.zip
+            path: ./function/src/function.zip
 
         - name: Download Artifact
           uses: actions/download-artifact@v2
           with:
             name: function-artifact
-            path: AzureFunctionApp
+            path: ./function/src
     
         - name: Deploy to Azure Function
           uses: azure/webapps-deploy@v2
           with:
-            app-name: your-function-app-name
-            slot-name: production
+            app-name: "${{ env.FUNCTION_APP_NAME}}"
             publish-profile: ${{ secrets.AZURE_FUNCTION_APP_PUBLISH_PROFILE }}
-            package: AzureFunctionApp/function.zip
-
-          #TODO use db connection string for function
-          #TODO zip deploy function code
+            package: ./function/src/function.zip
+        
+          #TODO to set db connection string in function env
+        # - name: Set Environment Variables
+        #   run: |
+        #     az functionapp config appsettings set --name <function-app-name> --resource-group <resource-group-name> --settings KEY1=VALUE1 KEY2=VALUE2 ...
+        #   env:
+        #     AZURE_FUNCTIONAPP_NAME: <function-app-name>
+        #     AZURE_RESOURCE_GROUP: <resource-group-name>
+        
 
         - name: terraform init site
           run: terraform init
