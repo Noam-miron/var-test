@@ -41,9 +41,6 @@
     </div>
 
     <script>
-        const body = document.body;
-        const pageTitle = document.getElementById('pageTitle');
-        const container = document.querySelector('.container')
         document.getElementById('searchForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -53,7 +50,7 @@
     const isVegChecked = document.getElementById('searchIsVeg').checked;
     const isOpenChecked = document.getElementById('searchIsOpen').checked;
 
-    const apiUrl = 'https://your-api-endpoint.com/search';
+    const apiUrl = '';
     const requestData = {
         name: nameValue,
         style: styleValue,
@@ -62,7 +59,6 @@
         isOpen: isOpenChecked,
     };
 
-    // Send a POST request
     fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -70,15 +66,24 @@
         },
         body: JSON.stringify(requestData),
     })
-    .then(response => response.text())
-    .then(text => {
-        const result = text || 'Result not found';
-        document.getElementById('resultBox').innerText = `Result: ${result}`;
+
+    .then(response => response.json())
+    .then(data => {
+        const resultBox = document.getElementById('resultBox');
+        const recommendation = data.restaurantRecommendation;
+
+        resultBox.innerHTML = `
+            <p>Name: ${recommendation.name}</p>
+            <p>Style: ${recommendation.style}</p>
+            <p>Address: ${recommendation.address}</p>
+            <p>Vegetarian: ${recommendation.vegetarian ? 'Yes' : 'No'}</p>
+            <p>Is Open: ${recommendation.isOpen ? 'Yes' : 'No'}</p>
+        `;
     })
     .catch(error => {
         console.error('Error:', error);
     });
-});
+    });
 </script>
 </body>
 </html>
