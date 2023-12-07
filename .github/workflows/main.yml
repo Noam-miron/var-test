@@ -66,9 +66,9 @@ jobs:
         - name: Run seeding script
           run: |
             python ./seed.py \
-            --cosmosdb-connection-string '$(env.COSMOSDB_CONNECTION_STRING)' \
-            --database-name "${env.COSMOSDB_DATABASE_NAME}" \
-            --container-name "${env.COSMOSDB_CONTAINER_NAME}"
+            --cosmosdb-connection-string "${{ env.COSMOSDB_CONNECTION_STRING }}" \
+            --database-name "${{ env.COSMOSDB_DATABASE_NAME }}" \
+            --container-name "${{ env.COSMOSDB_CONTAINER_NAME}}"
           working-directory: ./db
           env:
             PYTHONPATH: "./"
