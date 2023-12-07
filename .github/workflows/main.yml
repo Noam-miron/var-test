@@ -57,6 +57,11 @@
 #     #     run: terraform apply -auto-approve
 
 name: Terraform Deployment
+env:
+  ARM_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}
+  ARM_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}
+  ARM_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}
+  ARM_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
 on:
   push:
@@ -66,13 +71,10 @@ on:
 permissions:
     id-token: write
     contents: write
-env:
-  ARM_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}
-  ARM_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}
-  ARM_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}
-  ARM_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
 
 jobs:
+
   deploy:
     runs-on: ubuntu-latest
     steps:
