@@ -32,7 +32,8 @@ restaurantRecommendation :
 # TODO
 # modulate terraform files, create one resource group in a seperate module with ramdom name generator
 # create one consolidated root module that defines a single backend and not three seperate(maybe not to keep modularity?)
-# add code testing before deployment
+# add code testing and/or formatting before deployment
 # set up branching and protection in repo
 # add certificate for function
 # parameterize query, create stored procedure?
+# 

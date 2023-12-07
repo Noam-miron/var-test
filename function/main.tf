@@ -42,12 +42,12 @@ resource "azurerm_service_plan" "service_plan" {
   name                = "noam-app-service-plan"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
-  os_type             = "Windows"
+  os_type             = "Linux"
   sku_name            = "Y1"
 }
 
-resource "azurerm_windows_function_app" "function_app" {
-  name                = "noam-windows-function-app"
+resource "azurerm_linux_function_app" "function_app" {
+  name                = "noam-linux-function-app"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
 
