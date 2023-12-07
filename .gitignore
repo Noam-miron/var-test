@@ -1,6 +1,6 @@
 *
 
-!README.md
+!src/
 !/.github/
 !workflows/
 !/db/
@@ -15,3 +15,4 @@
 !function.py
 !requirements.txt
 !azure_oidc.sh
+!README.md
