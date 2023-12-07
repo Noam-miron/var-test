@@ -3,7 +3,7 @@ import json
 from os import environ
 
 # Replace these values with your Cosmos DB connection details
-cosmosdb_connection_string = environ.get("COSMOSDB_CONNECTION_STRING")
+cosmosdb_connection_string = environ.get("COSMOS_CONNECTION_STRING")[0]
 database_name = environ.get("COSMOSDB_DATABASE_NAME")
 container_name = environ.get("COSMOSDB_CONTAINER_NAME")
 
@@ -17,7 +17,9 @@ def seed_data(client, data):
 if __name__ == "__main__":
     with open("seed_data.json", "r") as file:
         seeding_data = json.load(file)
-    client = CosmosClient.from_connection_string(conn_str=cosmosdb_connection_string[0])
+    print("seeding")
+    print(cosmosdb_connection_string)
+    client = CosmosClient.from_connection_string(conn_str=cosmosdb_connection_string)
 
     seed_data(client, seeding_data)
 
