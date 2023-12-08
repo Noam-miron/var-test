@@ -2,6 +2,7 @@ import azure.functions as func
 import json
 import datetime
 from azure.cosmos import CosmosClient
+from os import environ
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
 
@@ -12,11 +13,11 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     is_veg = req_body.get('isVeg', False)
     is_open = req_body.get('isOpen', False)
 
-    cosmos_db_connection_string = ""
+    cosmos_db_connection_string = environ.get("COSMOSDB_CONNECTION_STRING")[0]
 
     client = CosmosClient.from_connection_string(cosmos_db_connection_string)
-    database_name = ""
-    container_name = ""
+    database_name = environ.get("COSMOSDB_DATABASE_NAME")
+    container_name = environ.get("COSMOSDB_CONTAINER_NAME")
 
     database = client.get_database_client(database_name)
     container = database.get_container_client(container_name)

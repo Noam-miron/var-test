@@ -44,7 +44,7 @@ jobs:
           working-directory: ./db
           run: | 
             terraform apply -auto-approve
-            echo "COSMOS_CONNECTION_STRING=$(terraform output -json cosmosdb_connection_string)" >> "$GITHUB_ENV"
+            echo "COSMOSDB_CONNECTION_STRING=$(terraform output -json cosmosdb_connection_string)" >> "$GITHUB_ENV"
             echo "COSMOSDB_DATABASE_NAME=$(terraform output -raw cosmosdb_sql_database)" >> "$GITHUB_ENV"
             echo "COSMOSDB_CONTAINER_NAME=$(terraform output -raw cosmosdb_sql_container_restaurants)" >> "$GITHUB_ENV"
 
@@ -62,9 +62,9 @@ jobs:
         # - name: run db seeding script
         #   run: |
         #     python ./seed.py \
-        #     --cosmosdb-connection-string "${{ env.COSMOS_CONNECTION_STRING }}" \
+        #     --cosmosdb-connection-string "${{ env.COSMOSDB_CONNECTION_STRING }}" \
         #     --database-name "${{ env.COSMOSDB_DATABASE_NAME }}" \
-        #     --container-name "${{ env.COSMOSDB_CONTAINER_NAME}}"
+        #     --container-name "${{ env.COSMOSDB_CONTAINER_NAME }}"
         #   working-directory: ./db
         #   env:
         #     PYTHONPATH: "./"
@@ -82,6 +82,7 @@ jobs:
           run: | 
             terraform apply -auto-approve
             echo "FUNCTION_APP_NAME=$(terraform output -raw function_app_name)" >> "$GITHUB_ENV"
+            echo "FUNCTION_APP_RESOURCE_GROUP=$(terraform output -raw resource_group_name)" >> "$GITHUB_ENV"
         
         - name: Build and Package Azure Function
           working-directory: ./function/src
@@ -104,17 +105,17 @@ jobs:
         - name: Deploy to Azure Function
           uses: azure/webapps-deploy@v2
           with:
-            app-name: "${{ env.FUNCTION_APP_NAME}}"
-            publish-profile: ${{ secrets.AZURE_FUNCTION_APP_PUBLISH_PROFILE }}
+            app-name: "${{ env.FUNCTION_APP_NAME }}"
+            publish-profile: "${{ secrets.AZURE_FUNCTION_APP_PUBLISH_PROFILE }}"
             package: ./function/src/function.zip
         
-          #TODO to set db connection string in function env
-        # - name: Set Environment Variables
-        #   run: |
-        #     az functionapp config appsettings set --name ${{ env.FUNCTION_APP_NAME}} --resource-group <resource-group-name> --settings KEY1=VALUE1 KEY2=VALUE2 ...
-        #   env:
-        #     AZURE_FUNCTIONAPP_NAME: <function-app-name>
-        #     AZURE_RESOURCE_GROUP: <resource-group-name>
+        - name: Set function Environment Variables
+          run: |
+            az functionapp config appsettings set --name "${{ env.FUNCTION_APP_NAME }}" \
+            --resource-group "${{ FUNCTION_APP_RESOURCE_GROUP }}" \
+            --settings  COSMOS_CONNECTION_STRING="${{ env.COSMOSDB_CONNECTION_STRING }}" \
+            COSMOSDB_DATABASE_NAME="${{ env.COSMOSDB_DATABASE_NAME }}" \
+            COSMOSDB_CONTAINER_NAME="${{ env.COSMOSDB_CONTAINER_NAME }}"
         
 
         - name: terraform init site
