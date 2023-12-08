@@ -108,13 +108,15 @@ jobs:
         #     app-name: "${{ env.FUNCTION_APP_NAME }}"
         #     publish-profile: "${{ secrets.AZURE_FUNCTION_APP_PUBLISH_PROFILE }}"
         #     package: ./function/src/function.zip
+        - name: Zip function code
+          run: zip -r function.zip ./function/src
             
         - name: Deploy Function App
           run: |
             az functionapp deployment source config-zip \
               --resource-group "${{ env.FUNCTION_APP_RESOURCE_GROUP }}" \
               --name "${{ env.FUNCTION_APP_NAME }}" \
-              --src ./function/src
+              --src ./function.zip
 
         - name: Set function Environment Variables
           run: |
