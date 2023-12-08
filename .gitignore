@@ -1,6 +1,7 @@
 *
 
 !src/
+!src2/
 !/.github/
 !workflows/
 !/db/
@@ -13,6 +14,7 @@
 !seed.py
 !seed_data.json
 !function.py
+!function_app.py
 !requirements.txt
 !host.json
 !azure_oidc.sh
