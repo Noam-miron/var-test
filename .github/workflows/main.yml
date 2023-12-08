@@ -114,7 +114,7 @@ jobs:
             az functionapp deployment source config-zip \
               --resource-group "${{ env.FUNCTION_APP_RESOURCE_GROUP }}" \
               --name "${{ env.FUNCTION_APP_NAME }}" \
-              --src ./function/src/function.zip
+              --src ./function/src
 
         - name: Set function Environment Variables
           run: |
@@ -124,9 +124,7 @@ jobs:
             COSMOSDB_DATABASE_NAME="${{ env.COSMOSDB_DATABASE_NAME }}" \
             COSMOSDB_CONTAINER_NAME="${{ env.COSMOSDB_CONTAINER_NAME }}"
 
-        - name: Stream Function App Logs
-          run: |
-            az functionapp log tail --name "${{ env.FUNCTION_APP_NAME }}" --resource-group "${{ env.FUNCTION_APP_RESOURCE_GROUP }}"
+
           
           
         
