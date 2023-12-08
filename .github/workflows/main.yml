@@ -111,7 +111,7 @@ jobs:
           #TODO to set db connection string in function env
         # - name: Set Environment Variables
         #   run: |
-        #     az functionapp config appsettings set --name <function-app-name> --resource-group <resource-group-name> --settings KEY1=VALUE1 KEY2=VALUE2 ...
+        #     az functionapp config appsettings set --name ${{ env.FUNCTION_APP_NAME}} --resource-group <resource-group-name> --settings KEY1=VALUE1 KEY2=VALUE2 ...
         #   env:
         #     AZURE_FUNCTIONAPP_NAME: <function-app-name>
         #     AZURE_RESOURCE_GROUP: <resource-group-name>
