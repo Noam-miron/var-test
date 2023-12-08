@@ -39,7 +39,7 @@ resource "azurerm_storage_account" "storage_account" {
 }
 
 resource "azurerm_service_plan" "service_plan" {
-  name                = "noam-app-service-plan"
+  name                = "varonis-app-service-plan"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   os_type             = "Linux"
@@ -47,7 +47,7 @@ resource "azurerm_service_plan" "service_plan" {
 }
 
 resource "azurerm_linux_function_app" "function_app" {
-  name                = "noam-linux-function-app"
+  name                = "varonis-linux-function-app"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
 
@@ -55,16 +55,16 @@ resource "azurerm_linux_function_app" "function_app" {
   storage_account_access_key = azurerm_storage_account.storage_account.primary_access_key
   service_plan_id            = azurerm_service_plan.service_plan.id
 
-  app_settings = {
-   # "WEBSITE_RUN_FROM_PACKAGE" = "1"
-    "FUNCTIONS_WORKER_RUNTIME" = "python"
-    #TODO: zip deploy function
-  }
+  # app_settings = {
+  #  # "WEBSITE_RUN_FROM_PACKAGE" = "1"
+  #   "FUNCTIONS_WORKER_RUNTIME" = "python"
+  #   #TODO: zip deploy function
+  # }
 
   site_config {
-    always_on = true
-    cors {
-      allowed_origins = ["*"]
-    }
+    # always_on = true
+    # cors {
+    #   allowed_origins = ["*"]
+    # }
   }
 }
