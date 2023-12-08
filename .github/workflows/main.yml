@@ -123,6 +123,11 @@ jobs:
             --settings  COSMOS_CONNECTION_STRING="${{ env.COSMOSDB_CONNECTION_STRING }}" \
             COSMOSDB_DATABASE_NAME="${{ env.COSMOSDB_DATABASE_NAME }}" \
             COSMOSDB_CONTAINER_NAME="${{ env.COSMOSDB_CONTAINER_NAME }}"
+
+        - name: Stream Function App Logs
+          run: |
+            az functionapp log tail --name "${{ env.FUNCTION_APP_NAME }}" --resource-group "${{ env.FUNCTION_APP_RESOURCE_GROUP }}"
+          
           
         
         # - name: terraform init site
