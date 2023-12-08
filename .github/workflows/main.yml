@@ -84,38 +84,38 @@ jobs:
             echo "FUNCTION_APP_NAME=$(terraform output -raw function_app_name)" >> "$GITHUB_ENV"
             echo "FUNCTION_APP_RESOURCE_GROUP=$(terraform output -raw resource_group_name)" >> "$GITHUB_ENV"
         
-        # - name: Build and Package Azure Function
-        #   working-directory: ./function/src
-        #   run: |
-        #     zip -r function.zip .
-        #   shell: bash
+        - name: Build and Package Azure Function
+          working-directory: ./function/src
+          run: |
+            zip -r function.zip .
+          shell: bash
     
-        # - name: Upload Artifact
-        #   uses: actions/upload-artifact@v2
-        #   with:
-        #     name: function-artifact
-        #     path: ./function/src/function.zip
+        - name: Upload Artifact
+          uses: actions/upload-artifact@v2
+          with:
+            name: function-artifact
+            path: ./function/src/function.zip
 
-        # - name: Download Artifact
-        #   uses: actions/download-artifact@v2
-        #   with:
-        #     name: function-artifact
-        #     path: ./function/src
+        - name: Download Artifact
+          uses: actions/download-artifact@v2
+          with:
+            name: function-artifact
+            path: ./function/src
     
-        # - name: Deploy to Azure Function
-        #   uses: azure/webapps-deploy@v2
-        #   with:
-        #     app-name: "${{ env.FUNCTION_APP_NAME }}"
-        #     publish-profile: "${{ secrets.AZURE_FUNCTION_APP_PUBLISH_PROFILE }}"
-        #     package: ./function/src/function.zip
+        - name: Deploy to Azure Function
+          uses: azure/webapps-deploy@v2
+          with:
+            app-name: "${{ env.FUNCTION_APP_NAME }}"
+            publish-profile: "${{ secrets.AZURE_FUNCTION_APP_PUBLISH_PROFILE }}"
+            package: ./function/src/function.zip
         
-        # - name: Set function Environment Variables
-        #   run: |
-        #     az functionapp config appsettings set --name "${{ env.FUNCTION_APP_NAME }}" \
-        #     --resource-group "${{ env.FUNCTION_APP_RESOURCE_GROUP }}" \
-        #     --settings  COSMOS_CONNECTION_STRING="${{ env.COSMOSDB_CONNECTION_STRING }}" \
-        #     COSMOSDB_DATABASE_NAME="${{ env.COSMOSDB_DATABASE_NAME }}" \
-        #     COSMOSDB_CONTAINER_NAME="${{ env.COSMOSDB_CONTAINER_NAME }}"
+        - name: Set function Environment Variables
+          run: |
+            az functionapp config appsettings set --name "${{ env.FUNCTION_APP_NAME }}" \
+            --resource-group "${{ env.FUNCTION_APP_RESOURCE_GROUP }}" \
+            --settings  COSMOS_CONNECTION_STRING="${{ env.COSMOSDB_CONNECTION_STRING }}" \
+            COSMOSDB_DATABASE_NAME="${{ env.COSMOSDB_DATABASE_NAME }}" \
+            COSMOSDB_CONTAINER_NAME="${{ env.COSMOSDB_CONTAINER_NAME }}"
         
 
         # - name: terraform init site
