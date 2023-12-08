@@ -57,12 +57,12 @@ resource "azurerm_linux_function_app" "function_app" {
 
   app_settings = {
   #  # "WEBSITE_RUN_FROM_PACKAGE" = "1"
-    # "FUNCTIONS_WORKER_RUNTIME" = "python"
+    "FUNCTIONS_WORKER_RUNTIME" = "python"
   #   #TODO: zip deploy function
   }
 
   site_config {
-    always_on = true
+    # always_on = true
     # cors {
     #   allowed_origins = ["*"]
     # }
