@@ -32,21 +32,21 @@ jobs:
           with:
             terraform_wrapper: false
 
-        - name: terraform init db
-          run: terraform init
-          working-directory: ./db
+        # - name: terraform init db
+        #   run: terraform init
+        #   working-directory: ./db
           
-        - name: terraform plan db
-          run: terraform plan
-          working-directory: ./db
+        # - name: terraform plan db
+        #   run: terraform plan
+        #   working-directory: ./db
 
-        - name: terraform apply db
-          working-directory: ./db
-          run: | 
-            terraform apply -auto-approve
-            echo "COSMOSDB_CONNECTION_STRING=$(terraform output -json cosmosdb_connection_string)" >> "$GITHUB_ENV"
-            echo "COSMOSDB_DATABASE_NAME=$(terraform output -raw cosmosdb_sql_database)" >> "$GITHUB_ENV"
-            echo "COSMOSDB_CONTAINER_NAME=$(terraform output -raw cosmosdb_sql_container_restaurants)" >> "$GITHUB_ENV"
+        # - name: terraform apply db
+        #   working-directory: ./db
+        #   run: | 
+        #     terraform apply -auto-approve
+        #     echo "COSMOSDB_CONNECTION_STRING=$(terraform output -json cosmosdb_connection_string)" >> "$GITHUB_ENV"
+        #     echo "COSMOSDB_DATABASE_NAME=$(terraform output -raw cosmosdb_sql_database)" >> "$GITHUB_ENV"
+        #     echo "COSMOSDB_CONTAINER_NAME=$(terraform output -raw cosmosdb_sql_container_restaurants)" >> "$GITHUB_ENV"
 
         # - name: set up python
         #   uses: actions/setup-python@v2
@@ -84,54 +84,54 @@ jobs:
             echo "FUNCTION_APP_NAME=$(terraform output -raw function_app_name)" >> "$GITHUB_ENV"
             echo "FUNCTION_APP_RESOURCE_GROUP=$(terraform output -raw resource_group_name)" >> "$GITHUB_ENV"
         
-        - name: Build and Package Azure Function
-          working-directory: ./function/src
-          run: |
-            zip -r function.zip .
-          shell: bash
+        # - name: Build and Package Azure Function
+        #   working-directory: ./function/src
+        #   run: |
+        #     zip -r function.zip .
+        #   shell: bash
     
-        - name: Upload Artifact
-          uses: actions/upload-artifact@v2
-          with:
-            name: function-artifact
-            path: ./function/src/function.zip
+        # - name: Upload Artifact
+        #   uses: actions/upload-artifact@v2
+        #   with:
+        #     name: function-artifact
+        #     path: ./function/src/function.zip
 
-        - name: Download Artifact
-          uses: actions/download-artifact@v2
-          with:
-            name: function-artifact
-            path: ./function/src
+        # - name: Download Artifact
+        #   uses: actions/download-artifact@v2
+        #   with:
+        #     name: function-artifact
+        #     path: ./function/src
     
-        - name: Deploy to Azure Function
-          uses: azure/webapps-deploy@v2
-          with:
-            app-name: "${{ env.FUNCTION_APP_NAME }}"
-            publish-profile: "${{ secrets.AZURE_FUNCTION_APP_PUBLISH_PROFILE }}"
-            package: ./function/src/function.zip
+        # - name: Deploy to Azure Function
+        #   uses: azure/webapps-deploy@v2
+        #   with:
+        #     app-name: "${{ env.FUNCTION_APP_NAME }}"
+        #     publish-profile: "${{ secrets.AZURE_FUNCTION_APP_PUBLISH_PROFILE }}"
+        #     package: ./function/src/function.zip
         
-        - name: Set function Environment Variables
-          run: |
-            az functionapp config appsettings set --name "${{ env.FUNCTION_APP_NAME }}" \
-            --resource-group "${{ env.FUNCTION_APP_RESOURCE_GROUP }}" \
-            --settings  COSMOS_CONNECTION_STRING="${{ env.COSMOSDB_CONNECTION_STRING }}" \
-            COSMOSDB_DATABASE_NAME="${{ env.COSMOSDB_DATABASE_NAME }}" \
-            COSMOSDB_CONTAINER_NAME="${{ env.COSMOSDB_CONTAINER_NAME }}"
+        # - name: Set function Environment Variables
+        #   run: |
+        #     az functionapp config appsettings set --name "${{ env.FUNCTION_APP_NAME }}" \
+        #     --resource-group "${{ env.FUNCTION_APP_RESOURCE_GROUP }}" \
+        #     --settings  COSMOS_CONNECTION_STRING="${{ env.COSMOSDB_CONNECTION_STRING }}" \
+        #     COSMOSDB_DATABASE_NAME="${{ env.COSMOSDB_DATABASE_NAME }}" \
+        #     COSMOSDB_CONTAINER_NAME="${{ env.COSMOSDB_CONTAINER_NAME }}"
         
 
-        - name: terraform init site
-          run: terraform init
-          working-directory: ./site
+        # - name: terraform init site
+        #   run: terraform init
+        #   working-directory: ./site
             
-        - name: terraform plan site
-          run: terraform plan
-          working-directory: ./site
+        # - name: terraform plan site
+        #   run: terraform plan
+        #   working-directory: ./site
 
-        - name: terraform apply site
-          working-directory: ./site
-          run: | 
-            terraform apply -auto-approve
-            # echo "COSMOS_CONNECTION_STRING=$(terraform output -json cosmosdb_connection_string)" >> "$GITHUB_ENV"
-            # echo "COSMOSDB_DATABASE_NAME=$(terraform output -raw cosmosdb_sql_database)" >> "$GITHUB_ENV"
-            # echo "COSMOSDB_CONTAINER_NAME=$(terraform output -raw cosmosdb_sql_container_restaurants)" >> "$GITHUB_ENV"
+        # - name: terraform apply site
+        #   working-directory: ./site
+        #   run: | 
+        #     terraform apply -auto-approve
+        #     # echo "COSMOS_CONNECTION_STRING=$(terraform output -json cosmosdb_connection_string)" >> "$GITHUB_ENV"
+        #     # echo "COSMOSDB_DATABASE_NAME=$(terraform output -raw cosmosdb_sql_database)" >> "$GITHUB_ENV"
+        #     # echo "COSMOSDB_CONTAINER_NAME=$(terraform output -raw cosmosdb_sql_container_restaurants)" >> "$GITHUB_ENV"
 
           #TODO embed function url fo site
