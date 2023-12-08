@@ -4,6 +4,11 @@ import datetime
 from azure.cosmos import CosmosClient
 from os import environ
 
+app = func.FunctionApp()
+
+@app.function_name(name="function")
+
+
 def main(req: func.HttpRequest) -> func.HttpResponse:
 
     req_body = req.get_json()
