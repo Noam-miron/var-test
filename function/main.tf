@@ -56,7 +56,7 @@ resource "azurerm_linux_function_app" "function_app" {
   service_plan_id            = azurerm_service_plan.service_plan.id
 
   app_settings = {
-  #  # "WEBSITE_RUN_FROM_PACKAGE" = "1"
+   "WEBSITE_RUN_FROM_PACKAGE" = "1"
     # "FUNCTIONS_WORKER_RUNTIME" = "python"
   #   #TODO: zip deploy function
   }

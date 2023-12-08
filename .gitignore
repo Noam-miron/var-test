@@ -14,5 +14,6 @@
 !seed_data.json
 !function.py
 !requirements.txt
+!host.json
 !azure_oidc.sh
 !README.md
