@@ -36,4 +36,4 @@ restaurantRecommendation :
 # set up branching and protection in repo
 # add certificate for function
 # parameterize query, create stored procedure?
-# 
+# app publish profile usage from within workflow instead of external secret
