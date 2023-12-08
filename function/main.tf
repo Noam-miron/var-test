@@ -9,6 +9,7 @@ terraform {
 }
 data "azurerm_client_config" "current" {}
 
+# Generate random resource group name
 resource "random_pet" "rg_name" {
   prefix = var.resource_group_name_prefix
 }
@@ -18,6 +19,7 @@ resource "azurerm_resource_group" "rg" {
   name     = random_pet.rg_name.id
 }
 
+# Generate random value for the storage account name
 resource "random_string" "storage_account_name" {
   length  = 8
   lower   = true
@@ -36,17 +38,13 @@ resource "azurerm_storage_account" "storage_account" {
   account_replication_type = "LRS"
 }
 
-resource "azurerm_app_service_plan" "app_service_plan" {
+resource "azurerm_service_plan" "service_plan" {
   name                = "noam-app-service-plan"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
-  kind                = "Linux"
+  os_type             = "Linux"
   reserved            = true
-
-  sku {
-    tier = "Dynamic"
-    size = "Y1"
-  }
+  sku_name            = "Y1"
 }
 
 resource "azurerm_linux_function_app" "function_app" {
@@ -56,7 +54,7 @@ resource "azurerm_linux_function_app" "function_app" {
 
   storage_account_name       = azurerm_storage_account.storage_account.name
   storage_account_access_key = azurerm_storage_account.storage_account.primary_access_key
-  service_plan_id            = azurerm_app_service_plan.app_service_plan.id
+  service_plan_id            = azurerm_service_plan.service_plan.id
 
   app_settings = {
     "WEBSITE_RUN_FROM_PACKAGE" = "1"
