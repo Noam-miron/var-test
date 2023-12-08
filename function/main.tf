@@ -43,7 +43,6 @@ resource "azurerm_service_plan" "service_plan" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   os_type             = "Linux"
-  reserved            = true
   sku_name            = "Y1"
 }
 
@@ -63,6 +62,7 @@ resource "azurerm_linux_function_app" "function_app" {
   }
 
   site_config {
+    always_on = true
     cors {
       allowed_origins = ["*"]
     }
