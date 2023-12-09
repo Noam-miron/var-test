@@ -62,6 +62,8 @@ jobs:
             terraform apply -auto-approve
             echo "FUNCTION_APP_NAME=$(terraform output -raw function_app_name)" >> "$GITHUB_ENV"
             echo "FUNCTION_APP_RESOURCE_GROUP=$(terraform output -raw resource_group_name)" >> "$GITHUB_ENV"
+            echo "FUNCTION_APP_PRIMARY_WEB_HOST=$(terraform output -raw primary_web_host)" >> "$GITHUB_ENV"
+
 
         - name: terraform init site
           run: terraform init
@@ -75,4 +77,12 @@ jobs:
           working-directory: ./site
           run: | 
             terraform apply -auto-approve
+
+        - name: Embed API Url In index.html
+          uses: nowactions/envsubst@v1
+          with:
+            input: ./site/index.html.tmpl
+            output: ./index.html
+          env:
+            API_URL: "https://${{ env.FUNCTION_APP_PRIMARY_WEB_HOST }}"
 
