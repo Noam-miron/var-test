@@ -8,11 +8,14 @@ terraform {
   }
 }
 
+locals {
+  zip_hash    = substr(filemd5("${path.module}/FunctionApp.zip"), 0, 6)
+}
+
 data "archive_file" "function" {
   type        = "zip"
   source_dir  = "${path.module}/src"
-  output_path = "${path.module}/FunctionApp.zip"
-  output_md5 = filemd5("${path.module}/FunctionApp.zip")
+  output_path = "${path.module}/FunctionApp-${local.zip_hash}.zip"
 }
 
 resource "random_pet" "rg_name" {
