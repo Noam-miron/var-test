@@ -2,7 +2,6 @@ from azure.cosmos import CosmosClient
 import json
 from os import environ
 
-# Replace these values with your Cosmos DB connection details
 cosmosdb_connection_string = environ.get("COSMOSDB_CONNECTION_STRING")[0]
 database_name = environ.get("COSMOSDB_DATABASE_NAME")
 container_name = environ.get("COSMOSDB_CONTAINER_NAME")
