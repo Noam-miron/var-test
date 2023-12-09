@@ -8,6 +8,12 @@ terraform {
   }
 }
 
+data "archive_file" "function" {
+  type        = "zip"
+  source_dir  = "${path.module}/src"
+  output_path = "${path.module}/FunctionApp.zip"
+}
+
 resource "random_pet" "rg_name" {
   prefix = var.resource_group_name_prefix
 }
