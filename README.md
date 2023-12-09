@@ -20,6 +20,8 @@ restaurantRecommendation :
 
 The static site tester gets redeployed automatically by terraform on code change thanks to an md5 hash on file.
 
+the API url is automatically embedded in site html file during deployment using envsubst.
+
 # Setup:
 In order to create this project in your azure account you will need to set up a storage account in azure for tf state
 and fill the storage account details in backend declaration site, function and db main.tf files.

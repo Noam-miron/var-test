@@ -9,70 +9,71 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 @app.route(route="api_function")
 def api_function(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
-    req_body = req.get_json()
-    name = req_body.get('name', '')
-    style = req_body.get('style', '')
-    address = req_body.get('address', '')
-    is_veg = req_body.get('isVeg', False)
-    is_open = req_body.get('isOpen', False)
+    logging.info('Python HTTP trigger function processed a request... YAY!')
+    return func.HttpResponse("No restaurants found")
+#     req_body = req.get_json()
+#     name = req_body.get('name', '')
+#     style = req_body.get('style', '')
+#     address = req_body.get('address', '')
+#     is_veg = req_body.get('isVeg', False)
+#     is_open = req_body.get('isOpen', False)
 
-    cosmos_db_connection_string = environ.get("COSMOSDB_CONNECTION_STRING")[0]
+#     cosmos_db_connection_string = environ.get("COSMOSDB_CONNECTION_STRING")[0]
 
-    client = CosmosClient.from_connection_string(cosmos_db_connection_string)
-    database_name = environ.get("COSMOSDB_DATABASE_NAME")
-    container_name = environ.get("COSMOSDB_CONTAINER_NAME")
+#     client = CosmosClient.from_connection_string(cosmos_db_connection_string)
+#     database_name = environ.get("COSMOSDB_DATABASE_NAME")
+#     container_name = environ.get("COSMOSDB_CONTAINER_NAME")
 
-    database = client.get_database_client(database_name)
-    container = database.get_container_client(container_name)
+#     database = client.get_database_client(database_name)
+#     container = database.get_container_client(container_name)
 
-    log_entry = {
-        'name': name,
-        'style': style,
-        'address': address,
-        'isVeg': is_veg,
-        'isOpen': is_open,
-        'timestamp': str(datetime.datetime.utcnow())
-    }
+#     log_entry = {
+#         'name': name,
+#         'style': style,
+#         'address': address,
+#         'isVeg': is_veg,
+#         'isOpen': is_open,
+#         'timestamp': str(datetime.datetime.utcnow())
+#     }
 
-    container.upsert_item(log_entry)
+#     container.upsert_item(log_entry)
 
-    result = query_cosmos_db(req_body,client,database,container)
+#     result = query_cosmos_db(req_body,client,database,container)
     
-    if result:
-        current_hour = datetime.datetime.utcnow().hour
-        json_result = {
-            'restaurantRecommendations': [
-                {
-                    'name': item['name'],
-                    'style': item['style'],
-                    'address': item['address'],
-                    'openHour': item['openHour'],
-                    'closeHour': item['closeHour'],
-                    'vegetarian': 'yes' if item['vegetarian'] else 'no',
-                    'isOpen': 'yes' if item['openHour'] <= current_hour < item['closeHour'] else 'no'
+#     if result:
+#         current_hour = datetime.datetime.utcnow().hour
+#         json_result = {
+#             'restaurantRecommendations': [
+#                 {
+#                     'name': item['name'],
+#                     'style': item['style'],
+#                     'address': item['address'],
+#                     'openHour': item['openHour'],
+#                     'closeHour': item['closeHour'],
+#                     'vegetarian': 'yes' if item['vegetarian'] else 'no',
+#                     'isOpen': 'yes' if item['openHour'] <= current_hour < item['closeHour'] else 'no'
 
-                }
-                for item in result
-            ]
-        }
-        return func.HttpResponse(json.dumps(json_result), mimetype="application/json")
-    else:
-        return func.HttpResponse("No restaurants found")
+#                 }
+#                 for item in result
+#             ]
+#         }
+#         return func.HttpResponse(json.dumps(json_result), mimetype="application/json")
+#     else:
+#         return func.HttpResponse("No restaurants found")
 
 
-def query_cosmos_db(query_parameters, client, database, container):
+# def query_cosmos_db(query_parameters, client, database, container):
 
-    query = "SELECT * FROM c WHERE "
-    for key, value in query_parameters.items():
-        if isinstance(value, str):
-            query += f'CONTAINS(c.{key}, "{value}") AND '
-        else:
-            query += f'c.{key} = {value} AND '
+#     query = "SELECT * FROM c WHERE "
+#     for key, value in query_parameters.items():
+#         if isinstance(value, str):
+#             query += f'CONTAINS(c.{key}, "{value}") AND '
+#         else:
+#             query += f'c.{key} = {value} AND '
 
-    query = query.rstrip("AND ")
+#     query = query.rstrip("AND ")
 
-    query_result = container.query_items(query=query, enable_cross_partition_query=True)
+#     query_result = container.query_items(query=query, enable_cross_partition_query=True)
 
-    return list(query_result)
+#     return list(query_result)
   

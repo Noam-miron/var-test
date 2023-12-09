@@ -79,21 +79,10 @@ resource "azurerm_linux_function_app" "function_app" {
     application_stack {
       python_version = "3.11"
     }
+    cors {
+      allowed_origins = ["*"]
+    }
   }
 
   zip_deploy_file = data.archive_file.function.output_path
 }
-
-#   app_settings = {
-#    "WEBSITE_RUN_FROM_PACKAGE" = "1"
-#     # "FUNCTIONS_WORKER_RUNTIME" = "python"
-#   #   #TODO: zip deploy function
-#   }
-
-#   site_config {
-#     ### always_on = true
-#     # cors {
-#     #   allowed_origins = ["*"]
-#     # }
-#   }
-# }
