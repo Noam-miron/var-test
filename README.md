@@ -1,3 +1,4 @@
+# README
 This project is an API for simple restaurant querying
 it is built to deploy with Terraform to Azure and consists of a static site for testing, an API function and a CosmoDB.
 
@@ -15,25 +16,22 @@ restaurantRecommendation :
     address: ‘wherever street 99, somewhere’,
     openHour: 09:00,
     closeHour: 23:00,
-    vegetarian : yes
+    vegetarian : yes,
+    isOpen: yes
     }
 }
 
-# TORUN
-# create terraform backend in azure, fill details in tf main files(site,function,db)
-# fill github org/repo/branch, azure subscription in azure_oidc.sh and run it to create service account
-# save service account details as repo secrets for github workflow
-# AZURE_CLIENT_ID
-# AZURE_SUBSCRIPTION_ID
-# AZURE_TENANT_ID
+# Setup:
+In order to create this project in your azure account you will need to set up a storage account in azure for tf state
+and fill the storage account details in backend declaration site, function and db main.tf files
 
-# AZURE_FUNCTION_APP_PUBLISH_PROFILE (additional github secret)
+You will need an Azure Service Account with permissions to deploy resources at the subscription level.
+If you already have one, you can save AZURE_CLIENT_ID, AZURE_SUBSCRIPTION_ID, AZURE_TENANT_ID as Github actions repo secrets.
+Otherwise you can create one with azure_oidc.sh script, fill github organization(user)/repo/branch and Azure subscition and run the script, save the created AZURE_CLIENT_ID, AZURE_SUBSCRIPTION_ID, AZURE_TENANT_ID as Github actions repo secrets.
 
-# TODO
-# modulate terraform files, create one resource group in a seperate module with ramdom name generator
-# create one consolidated root module that defines a single backend and not three seperate(maybe not to keep modularity?)
-# add code testing and/or formatting before deployment
-# set up branching and protection in repo
-# add certificate for function
-# parameterize query, create stored procedure?
-# app publish profile usage from within workflow instead of external secret
+# Future Iterations
+    1. Integrate function code deployment into workflow.
+    2. Integrate automatic DB seeding into workflow.
+    3. set up the query in DB (and parameterize it).
+    4. Add code testing(both terraform and python tests).
+    5. Add a branching strategy and branch protection.
