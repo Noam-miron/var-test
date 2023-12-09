@@ -109,7 +109,7 @@ jobs:
         #     publish-profile: "${{ secrets.AZURE_FUNCTION_APP_PUBLISH_PROFILE }}"
         #     package: ./function/src/function.zip
         - name: Zip function code
-          run: zip -r function.zip ./function/src2
+          run: zip -r function.zip ./function/src
             
         - name: Deploy Function App
           run: |
