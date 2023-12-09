@@ -47,5 +47,5 @@ resource "azurerm_storage_blob" "storage_blob" {
   type                   = "Block"
   content_type           = "text/html"
   source                 = "index.html"
-  content_md5            = "${base64md5(file("index.html"))}"
+  content_md5            = filemd5("index.html")
 }
