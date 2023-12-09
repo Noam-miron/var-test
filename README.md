@@ -17,6 +17,9 @@ restaurantRecommendation :
     }
 }
 ```
+
+The static site tester gets redeployed automatically by terraform on code change thanks to an md5 hash on file.
+
 # Setup:
 In order to create this project in your azure account you will need to set up a storage account in azure for tf state
 and fill the storage account details in backend declaration site, function and db main.tf files.
@@ -27,6 +30,7 @@ Otherwise you can create one with azure_oidc.sh script, fill github organization
 
 Seed DB with provided seed_data.json file(upload file to retaurants container).
 
+In order to deploy function(API) Python code, you will need to set up a deployment from vscode azure functions extension, this will be changed ASAP with the next iteration of the project to ensure automatic CI/CD
 
 
 # Future Iterations
