@@ -66,17 +66,10 @@ jobs:
 
         - name: Embed API Url In index.html
           shell: bash
+          working-directory: ./site
           run: |
             export API_URL="https://${{ env.FUNCTION_APP_PRIMARY_WEB_HOST }}"
             envsubst < index.html
-
-        # - name: Embed API Url In index.html
-        #   uses: nowactions/envsubst@v1
-        #   with:
-        #     input: ./site/index.html.tmpl
-        #     output: ./index.html
-        #   env:
-        #     API_URL: "https://${{ env.FUNCTION_APP_PRIMARY_WEB_HOST }}"
 
         - name: terraform init site
           run: terraform init
