@@ -7,7 +7,7 @@
 !/function/
 !/site/
 !.gitignore
-!index.html.tmpl
+!index.html
 !*.tf
 !main.yml
 !seed_data.json
