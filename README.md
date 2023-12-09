@@ -3,7 +3,7 @@ This project is an API for simple restaurant querying
 it is built to deploy with Terraform to Azure and consists of a static site for testing, an API function and a CosmoDB.
 
 The API recieves a query and returns a json in the following format:
-
+```code
 {
 restaurantRecommendation :
     {
@@ -16,7 +16,7 @@ restaurantRecommendation :
     isOpen: yes
     }
 }
-
+```
 # Setup:
 In order to create this project in your azure account you will need to set up a storage account in azure for tf state
 and fill the storage account details in backend declaration site, function and db main.tf files.

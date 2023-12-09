@@ -7,9 +7,7 @@ terraform {
     use_oidc             = true
   }
 }
-data "azurerm_client_config" "current" {}
 
-# Generate random resource group name
 resource "random_pet" "rg_name" {
   prefix = var.resource_group_name_prefix
 }
@@ -19,7 +17,6 @@ resource "azurerm_resource_group" "rg" {
   name     = random_pet.rg_name.id
 }
 
-# Generate random value for the storage account name
 resource "random_string" "storage_account_name" {
   length  = 8
   lower   = true

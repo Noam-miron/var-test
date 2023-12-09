@@ -7,7 +7,6 @@ terraform {
     use_oidc             = true
   }
 }
-data "azurerm_client_config" "current" {}
 
 resource "azurerm_resource_group" "resource_group" {
   name     = "${random_pet.prefix.id}-rg"

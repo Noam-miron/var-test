@@ -76,8 +76,7 @@ jobs:
           shell: bash
           working-directory: ./site
           run: |
-            API_URL="https://${{ env.FUNCTION_APP_PRIMARY_WEB_HOST }}"
-            envsubst '$API_URL' <index.html.tmpl | tee index.html
+            API_URL="https://${{ env.FUNCTION_APP_PRIMARY_WEB_HOST }}" envsubst '$API_URL' <index.html.tmpl | tee index.html
             # export API_URL="https://${{ env.FUNCTION_APP_PRIMARY_WEB_HOST }}"
             # envsubst < index.html
 
