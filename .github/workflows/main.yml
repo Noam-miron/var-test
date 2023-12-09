@@ -32,42 +32,21 @@ jobs:
           with:
             terraform_wrapper: false
 
-        # - name: terraform init db
-        #   run: terraform init
-        #   working-directory: ./db
+        - name: terraform init db
+          run: terraform init
+          working-directory: ./db
           
-        # - name: terraform plan db
-        #   run: terraform plan
-        #   working-directory: ./db
+        - name: terraform plan db
+          run: terraform plan
+          working-directory: ./db
 
-        # - name: terraform apply db
-        #   working-directory: ./db
-        #   run: | 
-        #     terraform apply -auto-approve
-        #     echo "COSMOSDB_CONNECTION_STRING=$(terraform output -json cosmosdb_connection_string)" >> "$GITHUB_ENV"
-        #     echo "COSMOSDB_DATABASE_NAME=$(terraform output -raw cosmosdb_sql_database)" >> "$GITHUB_ENV"
-        #     echo "COSMOSDB_CONTAINER_NAME=$(terraform output -raw cosmosdb_sql_container_restaurants)" >> "$GITHUB_ENV"
-
-        # - name: set up python
-        #   uses: actions/setup-python@v4
-        #   with:
-        #     python-version: 3.11
-
-        # - name: install dependencies
-        #   run: |
-        #     python -m pip install --upgrade pip
-        #     pip install azure-cosmos
-        #   working-directory: ./db
-
-        # - name: run db seeding script
-        #   run: |
-        #     python ./seed.py \
-        #     --cosmosdb-connection-string "${{ env.COSMOSDB_CONNECTION_STRING }}" \
-        #     --database-name "${{ env.COSMOSDB_DATABASE_NAME }}" \
-        #     --container-name "${{ env.COSMOSDB_CONTAINER_NAME }}"
-        #   working-directory: ./db
-        #   env:
-        #     PYTHONPATH: "./"
+        - name: terraform apply db
+          working-directory: ./db
+          run: | 
+            terraform apply -auto-approve
+            echo "COSMOSDB_CONNECTION_STRING=$(terraform output -json cosmosdb_connection_string)" >> "$GITHUB_ENV"
+            echo "COSMOSDB_DATABASE_NAME=$(terraform output -raw cosmosdb_sql_database)" >> "$GITHUB_ENV"
+            echo "COSMOSDB_CONTAINER_NAME=$(terraform output -raw cosmosdb_sql_container_restaurants)" >> "$GITHUB_ENV"
 
         - name: terraform init function
           run: terraform init
@@ -84,88 +63,16 @@ jobs:
             echo "FUNCTION_APP_NAME=$(terraform output -raw function_app_name)" >> "$GITHUB_ENV"
             echo "FUNCTION_APP_RESOURCE_GROUP=$(terraform output -raw resource_group_name)" >> "$GITHUB_ENV"
 
-        - name: Setup Python Environment
-          uses: actions/setup-python@v4
-          with:
-            python-version: 3.11
-
-        - name: 'Resolve Project Dependencies Using Pip'
-          shell: bash
-          run: |
-            pushd './function/src'
-            python -m pip install --upgrade pip
-            pip install -r requirements.txt --target=".python_packages/lib/site-packages"
-            popd
-
-        - name: 'Run Azure Functions Action'
-          uses: Azure/functions-action@v1
-          id: fa
-          with:
-            app-name: ${{ env.FUNCTION_APP_NAME }}
-            package: ./function/src
-            scm-do-build-during-deployment: true
-            enable-oryx-build: true
+        - name: terraform init site
+          run: terraform init
+          working-directory: ./site
             
-        # - name: Build and Package Azure Function
-        #   working-directory: ./function/src
-        #   run: |
-        #     zip -r function.zip .
-        #   shell: bash
-    
-        # - name: Upload Artifact
-        #   uses: actions/upload-artifact@v2
-        #   with:
-        #     name: function-artifact
-        #     path: ./function/src/function.zip
+        - name: terraform plan site
+          run: terraform plan
+          working-directory: ./site
 
-        # - name: Download Artifact
-        #   uses: actions/download-artifact@v2
-        #   with:
-        #     name: function-artifact
-        #     path: ./function/src
-    
-        # - name: Deploy to Azure Function
-        #   uses: azure/webapps-deploy@v2
-        #   with:
-        #     app-name: "${{ env.FUNCTION_APP_NAME }}"
-        #     publish-profile: "${{ secrets.AZURE_FUNCTION_APP_PUBLISH_PROFILE }}"
-        #     package: ./function/src/function.zip
-        # - name: Zip function code
-        #   run: zip -r function.zip ./function/src
-            
-        # - name: Deploy Function App
-        #   run: |
-        #     az functionapp deployment source config-zip \
-        #       --resource-group "${{ env.FUNCTION_APP_RESOURCE_GROUP }}" \
-        #       --name "${{ env.FUNCTION_APP_NAME }}" \
-        #       --src ./function.zip
+        - name: terraform apply site
+          working-directory: ./site
+          run: | 
+            terraform apply -auto-approve
 
-        # - name: Set function Environment Variables
-        #   run: |
-        #     az functionapp config appsettings set --name "${{ env.FUNCTION_APP_NAME }}" \
-        #     --resource-group "${{ env.FUNCTION_APP_RESOURCE_GROUP }}" \
-        #     --settings  COSMOS_CONNECTION_STRING="${{ env.COSMOSDB_CONNECTION_STRING }}" \
-        #     COSMOSDB_DATABASE_NAME="${{ env.COSMOSDB_DATABASE_NAME }}" \
-        #     COSMOSDB_CONTAINER_NAME="${{ env.COSMOSDB_CONTAINER_NAME }}"
-
-
-          
-          
-        
-        # - name: terraform init site
-        #   run: terraform init
-        #   working-directory: ./site
-            
-        # - name: terraform plan site
-        #   run: terraform plan
-        #   working-directory: ./site
-
-        # - name: terraform apply site
-        #   working-directory: ./site
-        #   run: | 
-        #     terraform apply -auto-approve
-        #     # echo "COSMOS_CONNECTION_STRING=$(terraform output -json cosmosdb_connection_string)" >> "$GITHUB_ENV"
-        #     # echo "COSMOSDB_DATABASE_NAME=$(terraform output -raw cosmosdb_sql_database)" >> "$GITHUB_ENV"
-        #     # echo "COSMOSDB_CONTAINER_NAME=$(terraform output -raw cosmosdb_sql_container_restaurants)" >> "$GITHUB_ENV"
-
-          #TODO embed function url fo site
