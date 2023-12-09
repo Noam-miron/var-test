@@ -51,7 +51,7 @@ resource "azurerm_service_plan" "service_plan" {
 
 resource "azurerm_application_insights" "application_insight" {
   name                = "${var.project}-linux-function-app-insight"
-  resource_group_name = azurerm_resource_group.resource_group.name
+  resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   application_type    = "other"
 }
