@@ -102,7 +102,7 @@ jobs:
           id: fa
           with:
             app-name: ${{ env.FUNCTION_APP_NAME }}
-            package: /function/src
+            package: ./function/src
             publish-profile: ${{ secrets.AZURE_FUNCTION_APP_PUBLISH_PROFILE }}
             scm-do-build-during-deployment: true
             enable-oryx-build: true
