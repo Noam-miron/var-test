@@ -1,3 +1,6 @@
+# This script doesn't work as expected yet!!!
+#
+
 from azure.cosmos import CosmosClient
 import json
 from os import environ
