@@ -27,9 +27,9 @@ def api_function(req: func.HttpRequest) -> func.HttpResponse:
     database = client.get_database_client(database_name)
     container = database.get_container_client(container_name)
 
-
-
-    return func.HttpResponse(req.get_json(), status_code=200, mimetype="application/json")
+    query_result = container.query_items(query="SELECT * FROM c", enable_cross_partition_query=True)
+    res=json.dumps(query_result)
+    return func.HttpResponse(res, status_code=200, mimetype="application/json")
 #     log_entry = {
 #         'name': name,
 #         'style': style,
