@@ -26,7 +26,7 @@ the API url is automatically embedded in site html file during deployment using 
 In order to create this project in your azure account you will need to set up a storage account in azure for tf state
 and fill the storage account details in backend declaration in site/, function/ and db/ main.tf files.
 
-You will need an Azure Service Account with permissions to deploy resources at the subscription level.
+You will need an Azure Service principal with permissions to deploy resources at the subscription level.
 If you already have one you can save the credentials in Github secrets, otherwise you can create one with azure_oidc.sh script.
 Fill in github organization(user)/repo/branch and Azure subscition and run the script, it will prompt you to login to your account through a browser, after which it will create the needed service account, save the created AZURE_CLIENT_ID, AZURE_SUBSCRIPTION_ID, AZURE_TENANT_ID as Github actions repo secrets.
 Browse to the repository on github, select 'Settings' tab, 'Secrets and variables', 'Actions', click 'New repository secret' and fill each of the secret names with the corresponding value.
