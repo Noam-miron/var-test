@@ -68,9 +68,7 @@ jobs:
           shell: bash
           working-directory: ./site
           run: |
-            API_URL="https://${{ env.FUNCTION_APP_PRIMARY_WEB_HOST }}" envsubst '$API_URL' <index.html.tmpl | tee index.html
-            # export API_URL="https://${{ env.FUNCTION_APP_PRIMARY_WEB_HOST }}/api/api_function"
-            # envsubst < index.html
+            API_URL="https://${{ env.FUNCTION_APP_PRIMARY_WEB_HOST }}/api/api_function" envsubst '$API_URL' <index.html.tmpl | tee index.html
 
         - name: terraform init site
           run: terraform init
@@ -84,5 +82,3 @@ jobs:
           working-directory: ./site
           run: | 
             terraform apply -auto-approve
-
- 
