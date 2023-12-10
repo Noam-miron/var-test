@@ -13,7 +13,7 @@ locals {
 data "archive_file" "function" {
   type        = "zip"
   source_dir  = "${path.module}/src"
-  output_path = "${path.module}/FunctionApp-${locals.func_src_md5}.zip"
+  output_path = "${path.module}/FunctionApp-${local.func_src_md5}.zip"
 }
 
 resource "random_pet" "rg_name" {
