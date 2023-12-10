@@ -25,7 +25,7 @@ def api_function(req: func.HttpRequest) -> func.HttpResponse:
         'closeHour': datetime().hour(22),
         'vegetarian': 'yes' if is_veg else 'no',
         'isOpen': 'yes' if 'openHour' <= datetime.datetime.utcnow().hour < 'closeHour' else 'no'
-        }
+    }
     
     outputDocument.set(func.Document.from_json(restaurantRecommendation))
 

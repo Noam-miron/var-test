@@ -4,9 +4,7 @@ it is built to deploy with Terraform to Azure and consists of a static site for 
 
 The API recieves a query and returns a json in the following format:
 ```code
-{
-restaurantRecommendation :
-    {
+restaurantRecommendation = {
     name: ‘Pizza hut’,
     style: ‘Italian’,
     address: ‘wherever street 99, somewhere’,
@@ -14,7 +12,6 @@ restaurantRecommendation :
     closeHour: 23:00,
     vegetarian : yes,   #in request true/false
     isOpen: yes         #in request true/false
-    }
 }
 ```
 The request to the API may contain as many (or as few) of the available properties in JSON format in body of the HTTP request. However for modularity it is supposed all properties get sent in the request as empty strings if not applicable.
