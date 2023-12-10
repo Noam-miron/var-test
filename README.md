@@ -17,10 +17,13 @@ restaurantRecommendation :
     }
 }
 ```
+The request to the API may contain as many (or as few) of the available properties in JSON format in body of HTTP request. However for modularity it is supposed all properties get sent in the request as empty strings if not applicable.
 
 The static site tester and fumction code get redeployed automatically by terraform on code change thanks to an md5 hash on files.
 
 the API url is automatically embedded in site html file during deployment using envsubst.
+
+
 
 Sadly, I havent gotten the DB seed script to work in the workflow yet, so there's just a placeholder script at the moment.
 

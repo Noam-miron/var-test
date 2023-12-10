@@ -38,7 +38,7 @@ jobs:
           working-directory: ./db
           run: | 
             terraform apply -auto-approve
-            echo "COSMOSDB_CONNECTION_STRING=$(terraform output -json cosmosdb_connection_string)" >> "$GITHUB_ENV"
+            echo "COSMOSDB_CONNECTION_STRING=$(terraform output -json cosmosdb_connection_string[0])" >> "$GITHUB_ENV"
             echo "COSMOSDB_DATABASE_NAME=$(terraform output -raw cosmosdb_sql_database)" >> "$GITHUB_ENV"
             echo "COSMOSDB_CONTAINER_NAME=$(terraform output -raw cosmosdb_sql_container_restaurants)" >> "$GITHUB_ENV"
 
@@ -91,5 +91,4 @@ jobs:
             --settings  COSMOSDB_CONNECTION_STRING="${{ env.COSMOSDB_CONNECTION_STRING }}" \
             COSMOSDB_DATABASE_NAME="${{ env.COSMOSDB_DATABASE_NAME }}" \
             COSMOSDB_CONTAINER_NAME="${{ env.COSMOSDB_CONTAINER_NAME }}"  
-
 
