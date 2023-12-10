@@ -16,7 +16,17 @@
     {
       "http": 
       {
-          "routePrefix": ""
+          "routePrefix": "api",
+          "maxOutstandingRequests": 200,
+          "maxConcurrentRequests": 100,
+          "dynamicThrottlesEnabled": true,
+          "hsts": {
+              "isEnabled": true,
+              "maxAge": "10"
+          },
+          "customHeaders": {
+              "X-Content-Type-Options": "nosniff"
+          }
       }
     }
   }
