@@ -95,6 +95,5 @@ resource "azurerm_linux_function_app" "function_app" {
       allowed_origins = ["*"]
     }
   }
-
   zip_deploy_file = data.archive_file.function.output_path
 }
