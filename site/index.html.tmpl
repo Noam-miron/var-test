@@ -71,14 +71,14 @@
     .then(data => {
         const resultBox = document.getElementById('resultBox');
         const recommendation = data.restaurantRecommendation;
-
-        resultBox.innerHTML = `
-            <p>Name: ${recommendation.name}</p>
-            <p>Style: ${recommendation.style}</p>
-            <p>Address: ${recommendation.address}</p>
-            <p>Vegetarian: ${recommendation.vegetarian ? 'Yes' : 'No'}</p>
-            <p>Is Open: ${recommendation.isOpen ? 'Yes' : 'No'}</p>
-        `;
+        resultBox.innerHTML = `<p>Name: ${restaurantRecommendation}</p>`;
+        // resultBox.innerHTML = `
+        //     <p>Name: ${recommendation.name}</p>
+        //     <p>Style: ${recommendation.style}</p>
+        //     <p>Address: ${recommendation.address}</p>
+        //     <p>Vegetarian: ${recommendation.vegetarian ? 'Yes' : 'No'}</p>
+        //     <p>Is Open: ${recommendation.isOpen ? 'Yes' : 'No'}</p>
+        // `;
     })
     .catch(error => {
         console.error('Error:', error);
