@@ -18,7 +18,7 @@ restaurantRecommendation :
 }
 ```
 
-The static site tester gets redeployed automatically by terraform on code change thanks to an md5 hash on file.
+The static site tester and fumction code get redeployed automatically by terraform on code change thanks to an md5 hash on files.
 
 the API url is automatically embedded in site html file during deployment using envsubst.
 
@@ -32,12 +32,9 @@ Otherwise you can create one with azure_oidc.sh script, fill github organization
 
 Seed DB with provided seed_data.json file(upload file to retaurants container).
 
-In order to deploy function(API) Python code, you will need to set up a deployment from vscode azure functions extension, this will be changed ASAP with the next iteration of the project to ensure automatic CI/CD
-
 
 # Future Iterations
-    1. Integrate function code deployment into workflow.
-    2. Integrate automatic DB seeding into workflow.
-    3. set up the query in DB (and parameterize it).
-    4. Add code testing(both terraform and python tests).
-    5. Add a branching strategy and branch protection.
+    1. Integrate automatic DB seeding into workflow.
+    2. set up the query in DB (and parameterize it).
+    3. Add code testing(both terraform and python tests).
+    4. Add a branching strategy and branch protection to repository.

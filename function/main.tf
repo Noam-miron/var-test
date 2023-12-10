@@ -82,7 +82,8 @@ resource "azurerm_linux_function_app" "function_app" {
       python_version = "3.11"
     }
     cors {
-      allowed_origins = ["*", "https://portal.azure.com"]
+      allowed_origins = ["*"]
+      #allowed_origins = ["*", "https://portal.azure.com"]
     }
   }
 

@@ -64,14 +64,6 @@ jobs:
             echo "FUNCTION_APP_RESOURCE_GROUP=$(terraform output -raw resource_group_name)" >> "$GITHUB_ENV"
             echo "FUNCTION_APP_PRIMARY_WEB_HOST=$(terraform output -raw primary_web_host)" >> "$GITHUB_ENV"
 
-        # - name: Embed API Url In index.html
-        #   uses: nowactions/envsubst@v1
-        #   with:
-        #     input: ./site/index.html.tmpl
-        #     output: ./site/index.html
-        #   env:
-        #     API_URL: "https://${{ env.FUNCTION_APP_PRIMARY_WEB_HOST }}"
-
         - name: Embed API Url In index.html
           shell: bash
           working-directory: ./site
