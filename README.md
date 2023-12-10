@@ -19,6 +19,9 @@ restaurantRecommendation :
 ```
 The request to the API may contain as many (or as few) of the available properties in JSON format in body of the HTTP request. However for modularity it is supposed all properties get sent in the request as empty strings if not applicable.
 
+Each component is provisioned seperatly in a terraform root module, using workflow environment to pass variables between them.
+
+
 The static site tester and fumction code get redeployed automatically by terraform on code change thanks to an md5 hash on files.
 
 the API url is automatically embedded in site html file during deployment using envsubst.
