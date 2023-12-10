@@ -21,18 +21,15 @@ The request to the API may contain as many (or as few) of the available properti
 
 Each component is provisioned seperatly in a terraform root module, using workflow environment to pass variables between them.
 
-
 The static site tester and fumction code get redeployed automatically by terraform on code change thanks to an md5 hash on files.
 
 the API url is automatically embedded in site html file during deployment using envsubst.
-
-
 
 Sadly, I havent gotten the DB seed script to work in the workflow yet, so there's just a placeholder script at the moment.
 
 # Setup:
 In order to create this project in your azure account you will need to set up a storage account in azure for tf state
-and fill the storage account details in backend declaration site, function and db main.tf files.
+and fill the storage account details in backend declaration in site/, function/ and db/ main.tf files.
 
 You will need an Azure Service Account with permissions to deploy resources at the subscription level.
 If you already have one, you can save AZURE_CLIENT_ID, AZURE_SUBSCRIPTION_ID, AZURE_TENANT_ID as Github actions repo secrets.

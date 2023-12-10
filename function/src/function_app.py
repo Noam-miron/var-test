@@ -17,9 +17,7 @@ def api_function(req: func.HttpRequest) -> func.HttpResponse:
     address = req_body.get('address', '')
     is_veg = req_body.get('isVeg', False)
     is_open = req_body.get('isOpen', False)
-    logging.info(f"${environ.get('COSMOSDB_CONNECTION_STRING')}")
-    logging.info(f"${environ.get('COSMOSDB_DATABASE_NAME')}")
-    logging.info(f"${environ.get('COSMOSDB_CONTAINER_NAME')}")
+    
     cosmos_db_connection_string = environ.get("COSMOSDB_CONNECTION_STRING")
 
     client = CosmosClient.from_connection_string(cosmos_db_connection_string)
@@ -29,10 +27,9 @@ def api_function(req: func.HttpRequest) -> func.HttpResponse:
     database = client.get_database_client(database_name)
     container = database.get_container_client(container_name)
 
-    logging.info('after DB client init... ')
-    logging.info('after DB client init... ')
-    
-    return func.HttpResponse(req_body, status_code=200, mimetype="application/json")
+
+
+    return func.HttpResponse(req.get_json(), status_code=200, mimetype="application/json")
 #     log_entry = {
 #         'name': name,
 #         'style': style,
