@@ -20,15 +20,16 @@ def api_function(req: func.HttpRequest) -> func.HttpResponse:
     logging.info(f"${environ.get('COSMOSDB_CONNECTION_STRING')}")
     logging.info(f"${environ.get('COSMOSDB_DATABASE_NAME')}")
     logging.info(f"${environ.get('COSMOSDB_CONTAINER_NAME')}")
-    # cosmos_db_connection_string = environ.get("COSMOSDB_CONNECTION_STRING")
+    cosmos_db_connection_string = environ.get("COSMOSDB_CONNECTION_STRING")
 
-    # client = CosmosClient.from_connection_string(cosmos_db_connection_string)
-    # database_name = environ.get("COSMOSDB_DATABASE_NAME")
-    # container_name = environ.get("COSMOSDB_CONTAINER_NAME")
+    client = CosmosClient.from_connection_string(cosmos_db_connection_string)
+    database_name = environ.get("COSMOSDB_DATABASE_NAME")
+    container_name = environ.get("COSMOSDB_CONTAINER_NAME")
 
-    # database = client.get_database_client(database_name)
-    # container = database.get_container_client(container_name)
+    database = client.get_database_client(database_name)
+    container = database.get_container_client(container_name)
 
+    logging.info('after DB client init... ')
     logging.info('after DB client init... ')
     
     return func.HttpResponse(req_body, status_code=200, mimetype="application/json")
