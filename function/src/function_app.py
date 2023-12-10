@@ -8,8 +8,9 @@ from os import environ
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 @app.route(route="api_function")
+@app.cosmos_db_output(arg_name="outputDocument", database_name=environ.get("COSMOSDB_DATABASE_NAME"), collection_name=environ.get("COSMOSDB_CONTAINER_NAME"), connection_string_setting=environ.get("COSMOSDB_CONNECTION_STRING"))
 def api_function(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request... YAY!')
+    logging.info('Python HTTP trigger function processed a request.')
   
     req_body = req.get_json()
     name = req_body.get('name', '')
@@ -18,18 +19,19 @@ def api_function(req: func.HttpRequest) -> func.HttpResponse:
     is_veg = req_body.get('isVeg', False)
     is_open = req_body.get('isOpen', False)
     
-    cosmos_db_connection_string = environ.get("COSMOSDB_CONNECTION_STRING")
-
-    client = CosmosClient.from_connection_string(cosmos_db_connection_string)
-    database_name = environ.get("COSMOSDB_DATABASE_NAME")
-    container_name = environ.get("COSMOSDB_CONTAINER_NAME")
-
-    database = client.get_database_client(database_name)
-    container = database.get_container_client(container_name)
-
-    query_result = container.query_items(query="SELECT * FROM c", enable_cross_partition_query=True)
-    res=json.dumps(query_result)
-    return func.HttpResponse(res, status_code=200, mimetype="application/json")
+    
+    restaurantRecommendation = {
+        'name': name,
+        'style': style,
+        'address': address,
+        'openHour': datetime().hour(9),
+        'closeHour': datetime().hour(22),
+        'vegetarian': 'yes' if is_veg else 'no',
+        'isOpen': 'yes' if 'openHour' <= datetime.datetime.utcnow().hour < 'closeHour' else 'no'
+        }
+    
+    outputDocument.set(func.Document.from_json(restaurantRecommendation))
+    return func.HttpResponse(restaurantRecommendation, status_code=200, mimetype="application/json")
 #     log_entry = {
 #         'name': name,
 #         'style': style,

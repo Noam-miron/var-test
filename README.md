@@ -25,8 +25,6 @@ The static site tester and fumction code get redeployed automatically by terrafo
 
 the API url is automatically embedded in site html file during deployment using envsubst.
 
-Sadly, I havent gotten the DB seed script to work in the workflow yet, so there's just a placeholder script at the moment.
-
 # Setup:
 In order to create this project in your azure account you will need to set up a storage account in azure for tf state
 and fill the storage account details in backend declaration in site/, function/ and db/ main.tf files.
@@ -38,8 +36,36 @@ Otherwise you can create one with azure_oidc.sh script, fill github organization
 Seed DB with provided seed_data.json file(upload file to retaurants container).
 
 
-# Future Iterations
-    1. Integrate automatic DB seeding into workflow.
-    2. set up the query in DB (and parameterize it).
-    3. Add code testing(both terraform and python tests).
-    4. Add a branching strategy and branch protection to repository.
+# Project Structure
+
+├── .gitignore
+├── azure_oidc.sh
+├── README.md
+├── db
+│   ├── main.tf
+│   ├── outputs.tf
+│   ├── providers.tf
+│   ├── variables.tf
+│   ├── seed_data.json
+│   └── seed.py
+├── function
+│   ├── main.tf
+│   ├── outputs.tf
+│   ├── providers.tf
+│   ├── variables.tf
+│   └── src
+│       ├── function_app.py
+│       ├── function.json
+│       ├── host.json
+│       └── requirements.txt
+└── site
+    ├── index.html.tmpl
+    ├── main.tf
+    ├── outputs.tf
+    ├── providers.tf
+    └── variables.tf
+
+The root of the project contains only support files, each component (static site, function, DB) is nested in its own subdirectory.
+Each subdirectory contains Terraform files (mainm outputs, providers and variables) and other related files.
+The function dir has another subdirectory containing the files requred for function zip deployment.
+
