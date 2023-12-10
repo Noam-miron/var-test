@@ -18,8 +18,9 @@ def api_function(req: func.HttpRequest) -> func.HttpResponse:
     is_veg = req_body.get('isVeg', False)
     is_open = req_body.get('isOpen', False)
     
-    print(environ.get("COSMOSDB_CONNECTION_STRING"), environ.get("COSMOSDB_DATABASE_NAME"), environ.get("COSMOSDB_CONTAINER_NAME"))
 
+    print(environ.get("COSMOSDB_CONNECTION_STRING"), environ.get("COSMOSDB_DATABASE_NAME"), environ.get("COSMOSDB_CONTAINER_NAME"))
+    logging.info(environ.get("COSMOSDB_CONNECTION_STRING"), environ.get("COSMOSDB_DATABASE_NAME"), environ.get("COSMOSDB_CONTAINER_NAME"))
     # cosmos_db_connection_string = environ.get("COSMOSDB_CONNECTION_STRING")[0]
 
     # client = CosmosClient.from_connection_string(cosmos_db_connection_string)
@@ -31,7 +32,7 @@ def api_function(req: func.HttpRequest) -> func.HttpResponse:
 
     # logging.info('after DB client init... ')
     
-    response_body = json.dumps(req_body)
+    response_body = json.dumps(environ.get("COSMOSDB_CONNECTION_STRING"),environ.get("COSMOSDB_DATABASE_NAME"), environ.get("COSMOSDB_CONTAINER_NAME"))
     return func.HttpResponse(response_body, status_code=200, mimetype="application/json")
 #     log_entry = {
 #         'name': name,
