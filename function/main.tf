@@ -51,11 +51,19 @@ resource "azurerm_service_plan" "service_plan" {
   sku_name            = "Y1"
 }
 
-resource "azurerm_application_insights" "application_insight" {
-  name                = "${var.project}-linux-function-app-insight"
+resource "azurerm_application_insights" "application_insights" {
+  name                = "${var.project}-linux-function-app-insights"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   application_type    = "other"
+}
+
+resource "azurerm_log_analytics_workspace" "log_analytics_workspace" {
+  name                = "${var.project}-log-analytics-workspace"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  sku                 = "Free"
+  retention_in_days   = 30
 }
 
 resource "azurerm_linux_function_app" "function_app" {
@@ -74,7 +82,8 @@ resource "azurerm_linux_function_app" "function_app" {
     "SCM_DO_BUILD_DURING_DEPLOYMENT" = "true"
     "FUNCTIONS_WORKER_RUNTIME"       = "python"
     "AzureWebJobsFeatureFlags"       = "EnableWorkerIndexing"
-    "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.application_insight.instrumentation_key
+    application_insights_connection_string = "${azurerm_application_insights.application_insights.connection_string}"
+    "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.application_insights.instrumentation_key
   }
 
   site_config {
