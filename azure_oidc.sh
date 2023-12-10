@@ -1,16 +1,12 @@
 #!/bin/bash
 
-# Log into Azure
 az login
 
-# Show current subscription (use 'az account set' to change subscription)
-az account show
-
-# Variables
 subscriptionId=$(az account show --query id -o tsv)
 appName="GitHub-var-test-Actions-OIDC"
 RBACRole="Contributor"
 
+#Fill these variables according to you need
 githubOrgName="Noam-miron"
 githubRepoName="var-test"
 githubBranch="main"
@@ -42,16 +38,12 @@ echo $githubPRConfig | az ad app federated-credential create --id $appId --param
 # Assign RBAC permissions to Service Principal (Change as necessary)
 echo "$appId" | while read -r line
 do
-    # Permission 1 (Example)
+    # Permission 1 (fill subscription id)
     az role assignment create \
         --role $RBACRole \
         --scope /subscriptions/efc72010-7c33-47d9-962b-6fd3849197df \
         --assignee $line \
         --subscription $subscriptionId
 
-    # Permission 2 (Example)
-    # az role assignment create \
-    #    --role "Reader and Data Access" \
-    #    --assignee "$line" \
-    #    --scope "/subscriptions/$subscriptionId/resourceGroups/$resourceGroupName/providers/Microsoft.Storage/storageAccounts/$storageName"
-done
+#Add additional permissions as needed
+ done
