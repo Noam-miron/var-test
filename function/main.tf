@@ -7,11 +7,13 @@ terraform {
     use_oidc             = true
   }
 }
-
+locals {
+  func_src_md5  = substr(md5(join("", [for f in fileset("${path.module}/src", "*"): filemd5("${path.module}/src/${f}")])), 0, 6)
+}
 data "archive_file" "function" {
   type        = "zip"
   source_dir  = "${path.module}/src"
-  output_path = "${path.module}/FunctionApp-$(substr(${data.archive_file.function.output_md5})).zip"
+  output_path = "${path.module}/FunctionApp-${locals.func_src_md5}.zip"
 }
 
 resource "random_pet" "rg_name" {
