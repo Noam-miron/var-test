@@ -10,14 +10,16 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 @app.route(route="api_function")
 def api_function(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request... YAY!')
-    return func.HttpResponse("YAY")
-#     req_body = req.get_json()
-#     name = req_body.get('name', '')
-#     style = req_body.get('style', '')
-#     address = req_body.get('address', '')
-#     is_veg = req_body.get('isVeg', False)
-#     is_open = req_body.get('isOpen', False)
-
+  
+    req_body = req.get_json()
+    name = req_body.get('name', '')
+    style = req_body.get('style', '')
+    address = req_body.get('address', '')
+    is_veg = req_body.get('isVeg', False)
+    is_open = req_body.get('isOpen', False)
+    
+    logging.info(f"parsed request, ${req_body}")
+    return func.HttpResponse(req_body)
 #     cosmos_db_connection_string = environ.get("COSMOSDB_CONNECTION_STRING")[0]
 
 #     client = CosmosClient.from_connection_string(cosmos_db_connection_string)
