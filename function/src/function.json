@@ -1,0 +1,18 @@
+{
+    "bindings": [
+      {
+        "name": "req",
+        "type": "httpTrigger",
+        "direction": "in",
+        "methods": [ "post" ],
+        "route": "Source/MPAA",
+        "authLevel": "anonymous"
+      },
+      {
+        "type": "http",
+        "name": "res",
+        "direction": "out"
+      }
+    ],
+    "disabled": false
+  }

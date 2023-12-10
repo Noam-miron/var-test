@@ -14,5 +14,6 @@
 !function_app.py
 !requirements.txt
 !host.json
+!function.json
 !azure_oidc.sh
 !README.md
