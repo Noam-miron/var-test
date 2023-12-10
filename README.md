@@ -12,12 +12,12 @@ restaurantRecommendation :
     address: ‘wherever street 99, somewhere’,
     openHour: 09:00,
     closeHour: 23:00,
-    vegetarian : yes,
-    isOpen: yes
+    vegetarian : yes,   #in request true/false
+    isOpen: yes         #in request true/false
     }
 }
 ```
-The request to the API may contain as many (or as few) of the available properties in JSON format in body of HTTP request. However for modularity it is supposed all properties get sent in the request as empty strings if not applicable.
+The request to the API may contain as many (or as few) of the available properties in JSON format in body of the HTTP request. However for modularity it is supposed all properties get sent in the request as empty strings if not applicable.
 
 The static site tester and fumction code get redeployed automatically by terraform on code change thanks to an md5 hash on files.
 
