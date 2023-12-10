@@ -33,11 +33,14 @@ You will need an Azure Service Account with permissions to deploy resources at t
 If you already have one, you can save AZURE_CLIENT_ID, AZURE_SUBSCRIPTION_ID, AZURE_TENANT_ID as Github actions repo secrets.
 Otherwise you can create one with azure_oidc.sh script, fill github organization(user)/repo/branch and Azure subscition and run the script, save the created AZURE_CLIENT_ID, AZURE_SUBSCRIPTION_ID, AZURE_TENANT_ID as Github actions repo secrets.
 
+Github workflow is triggered at push to main branch, after workflow compleation all infrastructure should be available.
+
 Seed DB with provided seed_data.json file(upload file to retaurants container).
 
+The project can now be tested via the API endpoint directly or the static site provided
 
 # Project Structure
-
+```code
 ├── .gitignore
 ├── azure_oidc.sh
 ├── README.md
@@ -64,7 +67,7 @@ Seed DB with provided seed_data.json file(upload file to retaurants container).
     ├── outputs.tf
     ├── providers.tf
     └── variables.tf
-
+```
 The root of the project contains only support files, each component (static site, function, DB) is nested in its own subdirectory.
 Each subdirectory contains Terraform files (mainm outputs, providers and variables) and other related files.
 The function dir has another subdirectory containing the files requred for function zip deployment.

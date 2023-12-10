@@ -40,7 +40,7 @@ jobs:
             terraform apply -auto-approve
             echo "COSMOSDB_CONNECTION_STRING=$(terraform output -raw cosmosdb_connection_string)" >> "$GITHUB_ENV"
             echo "COSMOSDB_DATABASE_NAME=$(terraform output -raw cosmosdb_sql_database)" >> "$GITHUB_ENV"
-            echo "COSMOSDB_CONTAINER_NAME=$(terraform output -raw cosmosdb_sql_container_restaurants)" >> "$GITHUB_ENV"
+            echo "COSMOSDB_CONTAINER_NAME=$(terraform output -raw cosmosdb_sql_container_history)" >> "$GITHUB_ENV"
 
         - name: terraform init function
           run: terraform init
@@ -58,7 +58,7 @@ jobs:
             echo "FUNCTION_APP_RESOURCE_GROUP=$(terraform output -raw resource_group_name)" >> "$GITHUB_ENV"
             echo "FUNCTION_APP_PRIMARY_WEB_HOST=$(terraform output -raw primary_web_host)" >> "$GITHUB_ENV"
 
-        - name: Embed API Url In index.html
+        - name: embed API url in index.html
           shell: bash
           working-directory: ./site
           run: |
@@ -77,14 +77,14 @@ jobs:
           run: | 
             terraform apply -auto-approve
 
-        - name: 'azure CLI login using OIDC'
+        - name: azure CLI login using OIDC
           uses: azure/login@v1
           with:
             client-id: ${{ secrets.AZURE_CLIENT_ID }}
             tenant-id: ${{ secrets.AZURE_TENANT_ID }}
             subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-        - name: Set function Environment Variables
+        - name: set function environment variables
           run: |
             az functionapp config appsettings set --name "${{ env.FUNCTION_APP_NAME }}" \
             --resource-group "${{ env.FUNCTION_APP_RESOURCE_GROUP }}" \
