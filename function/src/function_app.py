@@ -36,6 +36,6 @@ def api_function(req: func.HttpRequest) -> func.HttpResponse:
         'isOpen': 'yes' if 'openHour' <= datetime.datetime.now().hour < 'closeHour' else 'no'
     }
     
-    outputDocument.set(func.Document.from_json(restaurantRecommendation))
+    # outputDocument.set(func.Document.from_json(restaurantRecommendation))
 
     return func.HttpResponse(restaurantRecommendation, status_code=200, mimetype="application/json")
