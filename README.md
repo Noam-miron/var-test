@@ -27,12 +27,13 @@ In order to create this project in your azure account you will need to set up a 
 and fill the storage account details in backend declaration in site/, function/ and db/ main.tf files.
 
 You will need an Azure Service Account with permissions to deploy resources at the subscription level.
-If you already have one, you can save AZURE_CLIENT_ID, AZURE_SUBSCRIPTION_ID, AZURE_TENANT_ID as Github actions repo secrets.
-Otherwise you can create one with azure_oidc.sh script, fill github organization(user)/repo/branch and Azure subscition and run the script, save the created AZURE_CLIENT_ID, AZURE_SUBSCRIPTION_ID, AZURE_TENANT_ID as Github actions repo secrets.
+If you already have one you can save the credentials in Github secrets, otherwise you can create one with azure_oidc.sh script.
+Fill in github organization(user)/repo/branch and Azure subscition and run the script, it will prompt you to login to your account through a browser, after which it will create the needed service account, save the created AZURE_CLIENT_ID, AZURE_SUBSCRIPTION_ID, AZURE_TENANT_ID as Github actions repo secrets.
+Browse to the repository on github, select 'Settings' tab, 'Secrets and variables', 'Actions', click 'New repository secret' and fill each of the secret names with the corresponding value.
 
-Github workflow is triggered at push to main branch, after workflow compleation all infrastructure should be available.
+The deployment is almost completely automatic, the Github workflow is triggered on a push to main branch, the steps are simple and ordered, after workflow compleation all infrastructure should be available.
 
-Seed DB with provided seed_data.json file(upload file to retaurants container).
+you will need to seed the DB with provided seed_data.json file. Browse to the Azure portal, select the created cosmosDB database, from the available menu select data explorer, in the center pane, under the created DB, select the restaurants container, select items, and then on the top navpane select 'upload item', browse and select the provided seed_data.json file and hit enter, the DB container will be seeded and you will recieve an indication of the number of entries uploaded.
 
 The project can now be tested via the API endpoint directly or the static site provided
 

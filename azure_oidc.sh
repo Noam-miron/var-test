@@ -8,7 +8,7 @@ RBACRole="Contributor"
 
 #Fill these variables according to you need
 githubOrgName="Noam-miron"
-githubRepoName="var-test"
+githubRepoName="varonis_project"
 githubBranch="main"
 
 # Create AAD App and Principal
