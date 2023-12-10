@@ -83,3 +83,11 @@ jobs:
           run: | 
             terraform apply -auto-approve
 
+        - name: Set function Environment Variables
+          run: |
+            az functionapp config appsettings set --name "${{ env.FUNCTION_APP_NAME }}" \
+            --resource-group "${{ env.FUNCTION_APP_RESOURCE_GROUP }}" \
+            --settings  COSMOSDB_CONNECTION_STRING="${{ env.COSMOSDB_CONNECTION_STRING }}" \
+            COSMOSDB_DATABASE_NAME="${{ env.COSMOSDB_DATABASE_NAME }}" \
+            COSMOSDB_CONTAINER_NAME="${{ env.COSMOSDB_CONTAINER_NAME }}"  
+

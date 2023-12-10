@@ -22,6 +22,8 @@ The static site tester and fumction code get redeployed automatically by terrafo
 
 the API url is automatically embedded in site html file during deployment using envsubst.
 
+Sadly, I havent gotten the DB seed script to work in the workflow yet, so there's just a placeholder script at the moment.
+
 # Setup:
 In order to create this project in your azure account you will need to set up a storage account in azure for tf state
 and fill the storage account details in backend declaration site, function and db main.tf files.

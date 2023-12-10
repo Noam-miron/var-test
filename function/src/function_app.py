@@ -18,20 +18,21 @@ def api_function(req: func.HttpRequest) -> func.HttpResponse:
     is_veg = req_body.get('isVeg', False)
     is_open = req_body.get('isOpen', False)
     
-    logging.info(f"parsed request, {req_body}")
-    response_body = json.dumps(req_body)
+    print(environ.get("COSMOSDB_CONNECTION_STRING"), environ.get("COSMOSDB_DATABASE_NAME"), environ.get("COSMOSDB_CONTAINER_NAME"))
 
+    # cosmos_db_connection_string = environ.get("COSMOSDB_CONNECTION_STRING")[0]
+
+    # client = CosmosClient.from_connection_string(cosmos_db_connection_string)
+    # database_name = environ.get("COSMOSDB_DATABASE_NAME")
+    # container_name = environ.get("COSMOSDB_CONTAINER_NAME")
+
+    # database = client.get_database_client(database_name)
+    # container = database.get_container_client(container_name)
+
+    # logging.info('after DB client init... ')
     
+    response_body = json.dumps(req_body)
     return func.HttpResponse(response_body, status_code=200, mimetype="application/json")
-#     cosmos_db_connection_string = environ.get("COSMOSDB_CONNECTION_STRING")[0]
-
-#     client = CosmosClient.from_connection_string(cosmos_db_connection_string)
-#     database_name = environ.get("COSMOSDB_DATABASE_NAME")
-#     container_name = environ.get("COSMOSDB_CONTAINER_NAME")
-
-#     database = client.get_database_client(database_name)
-#     container = database.get_container_client(container_name)
-
 #     log_entry = {
 #         'name': name,
 #         'style': style,
