@@ -69,4 +69,3 @@ The project can now be tested via the API endpoint directly or the static site p
 The root of the project contains only support files, each component (static site, function, DB) is nested in its own subdirectory.
 Each subdirectory contains Terraform files (mainm outputs, providers and variables) and other related files.
 The function dir has another subdirectory containing the files requred for function zip deployment.
-
