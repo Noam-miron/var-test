@@ -90,4 +90,6 @@ jobs:
             --resource-group "${{ env.FUNCTION_APP_RESOURCE_GROUP }}" \
             --settings  COSMOSDB_CONNECTION_STRING="${{ env.COSMOSDB_CONNECTION_STRING }}" \
             COSMOSDB_DATABASE_NAME="${{ env.COSMOSDB_DATABASE_NAME }}" \
-            COSMOSDB_CONTAINER_NAME="${{ env.COSMOSDB_CONTAINER_NAME }}"  
+            COSMOSDB_CONTAINER_NAME="${{ env.COSMOSDB_CONTAINER_NAME }}"
+
+            
