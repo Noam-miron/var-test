@@ -78,8 +78,6 @@ resource "azurerm_linux_function_app" "function_app" {
   https_only                  = true
   functions_extension_version = "~4"
   app_settings = {
-    "ENABLE_ORYX_BUILD"              = "true"
-    "SCM_DO_BUILD_DURING_DEPLOYMENT" = "true"
     "FUNCTIONS_WORKER_RUNTIME"       = "python"
     "AzureWebJobsFeatureFlags"       = "EnableWorkerIndexing"
     application_insights_connection_string = "${azurerm_application_insights.application_insights.connection_string}"
@@ -95,5 +93,16 @@ resource "azurerm_linux_function_app" "function_app" {
       allowed_origins = ["*"]
     }
   }
-  zip_deploy_file = data.archive_file.function.output_path
+  # zip_deploy_file = data.archive_file.function.output_path
+}
+
+resource "azurerm_function_app_function" "function_app_function" {
+  name            = "python-function"
+  function_app_id = azurerm_linux_function_app.function_app.id
+  language        = "Python"
+  file {
+    name    = "function_app.py"
+    content = file("./src/function_app.py")
+  }
+  config_json = file("./src/function.json")
 }
