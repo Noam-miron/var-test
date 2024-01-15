@@ -97,7 +97,7 @@ resource "azurerm_linux_function_app" "function_app" {
 }
 
 resource "azurerm_function_app_function" "function_app_function" {
-  name            = "python-function"
+  name            = "api-function"
   function_app_id = azurerm_linux_function_app.function_app.id
   language        = "Python"
   file {
